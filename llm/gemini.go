@@ -81,6 +81,7 @@ If unsure, produce a short, neutral line consistent with the persona. Do NOT add
 		// 任意: 名前入りで台本化しそうならストップ語を置く
 		StopSequences: []string{
 			fmt.Sprintf("(%s)", input.Persona.DisplayName), // 自分の名前が出たらストップ
+			"()", // 何もない括弧はストップ
 		},
 	}
 

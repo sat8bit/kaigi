@@ -22,12 +22,16 @@ func NewCha(
 	bus bus.Bus,
 	turnManager turn.Manager,
 ) *Cha {
+	// 最後に話した時刻を「MinGapSeconds」秒前に設定することで、
+	// 起動後すぐに発言条件を満たしつつ、各Chaの発言タイミングを自然にずらす。
+	initialLastTalk := time.Now().Add(-time.Duration(persona.MinGapSeconds) * time.Second)
+
 	return &Cha{
 		Context:     ctx,
 		ChaId:       chaId,
 		Persona:     persona,
-		inbox:       make([]*message.Message, 0, 5),
-		lastTalk:    time.Now(),
+		inbox:       make([]*message.Message, 0, 10),
+		lastTalk:    initialLastTalk,
 		llm:         llmInstance,
 		bus:         bus,
 		turnManager: turnManager,
@@ -65,7 +69,7 @@ func (c *Cha) Start() {
 				}
 				c.mu.Lock()
 				c.inbox = append(c.inbox, in)
-				if len(c.inbox) > 5 {
+				if len(c.inbox) > 10 {
 					c.inbox = c.inbox[1:]
 				}
 				c.mu.Unlock()
@@ -118,7 +122,6 @@ func (c *Cha) tryToTalk() {
 		From: c.Persona,
 		Text: resp,
 		At:   now,
-		Kind: message.KindSay,
 	}); err != nil {
 		slog.ErrorContext(c.Context, fmt.Sprintf("Cha %s: Broadcast error: %v", c.ChaId, err))
 	}

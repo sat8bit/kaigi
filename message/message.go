@@ -13,3 +13,7 @@ type Message struct {
 	Kind Kind // "say", "system", "error", etc.
 	Meta map[string]string
 }
+
+func (m *Message) IsSystemMessage() bool {
+	return m.Kind == KindSystem
+}

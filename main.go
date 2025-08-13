@@ -4,9 +4,9 @@ import (
 	"context"
 	"fmt"
 	"log"
-	"log/slog"
 	"os"
 	"os/signal"
+	"strings"
 	"syscall"
 	"time"
 
@@ -59,6 +59,7 @@ func main() {
 	if err != nil {
 		log.Fatalf("failed to get random personas: %v", err)
 	}
+	var personaNames []string
 	for _, p := range personas {
 		llmClient := llm.NewGemini(ctx, projectId, location, "gemini-2.5-flash-lite")
 		chaInstance := cha.NewCha(
@@ -69,14 +70,15 @@ func main() {
 			bus,
 			turnManager,
 		)
+		personaNames = append(personaNames, p.DisplayName)
 		chaInstance.Start()
-		slog.Info("Started Cha", "personaId", p.PersonaId, "displayName", p.DisplayName)
 	}
 
 	// 最初の話題を送信
+
 	if err := bus.Broadcast(&message.Message{
 		From: &persona.Persona{},
-		Text: os.Args[1],
+		Text: fmt.Sprintf("話題は「%s」。 参加者は %s の計 %d 名です。", os.Args[1], strings.Join(personaNames, "、"), len(personas)),
 		At:   time.Now(),
 		Kind: message.KindSystem,
 	}); err != nil {
