@@ -1,4 +1,4 @@
-baseURL = 'baseURL = "https://sat8bit.github.io/kaigi/"'
+baseURL = "https://sat8bit.github.io/kaigi/"
 
 theme = ["github.com/dillonzq/LoveIt"]
 languageCode = 'ja'
