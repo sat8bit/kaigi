@@ -6,28 +6,36 @@ import (
 	"fmt"
 	"log"
 	"log/slog"
+	"math/rand"
 	"os"
 	"os/signal"
 	"strings"
+	"sync"
 	"syscall"
 	"time"
 
 	buspkg "github.com/sat8bit/kaigi/bus"
 	"github.com/sat8bit/kaigi/cha"
+	"github.com/sat8bit/kaigi/fetcher"
 	"github.com/sat8bit/kaigi/llm"
 	"github.com/sat8bit/kaigi/message"
 	"github.com/sat8bit/kaigi/persona"
 	"github.com/sat8bit/kaigi/renderer"
 	"github.com/sat8bit/kaigi/supervisor"
+	"github.com/sat8bit/kaigi/topic"
 	"github.com/sat8bit/kaigi/turn"
 )
 
 func main() {
+	// ★★★ この一行が、全てを、解決します ★★★
+	rand.Seed(time.Now().UnixNano())
+
 	// --- コマンドライン引数のパース ---
 	var (
-		topic    = flag.String("topic", "今日の天気について", "Initial topic for the conversation")
 		maxTurns = flag.Int("turns", 20, "Maximum number of turns before shutdown")
 		numChas  = flag.Int("chas", 3, "Number of Chas to participate")
+		rssURL   = flag.String("rss-url", "", "URL of the RSS feed to use as a topic")
+		rssLimit = flag.Int("rss-limit", 1, "Maximum number of RSS items to fetch")
 	)
 	flag.Parse()
 
@@ -51,23 +59,40 @@ func main() {
 		log.Fatal("set LOCATION environment variable")
 	}
 
+	// --- 話題の取得 ---
+	var topics []*topic.Topic
+	var err error
+	if *rssURL != "" {
+		slog.Info("Fetching topics from RSS feed...", "url", *rssURL)
+		topicFetcher := fetcher.NewRSSFetcher(*rssURL, *rssLimit)
+		topics, err = topicFetcher.Fetch(ctx)
+		if err != nil {
+			log.Fatalf("failed to fetch topics: %v", err)
+		}
+		for _, t := range topics {
+			slog.Info("Topic fetched", "title", t.Title)
+		}
+	}
+
 	// --- ペルソナを埋め込みリソースから読み込む ---
 	personaPool, err := persona.NewPool()
 	if err != nil {
 		log.Fatalf("failed to load persona pool: %v", err)
 	}
 
+	// --- 主要コンポーネントの初期化 ---
 	bus := buspkg.NewMemoryBus()
 	turnManager := turn.NewMutexManager()
+	var wg sync.WaitGroup
 
 	// --- レンダラーを初期化 ---
 	consoleRenderer := renderer.NewConsoleRenderer()
-	if err := consoleRenderer.Render(bus); err != nil {
+	if err := consoleRenderer.Render(bus, &wg); err != nil {
 		log.Fatalf("failed to initialize console renderer: %v", err)
 	}
 
-	markdownRenderer := renderer.NewMarkdownRenderer("./pages/content/posts")
-	if err := markdownRenderer.Render(ctx, bus); err != nil {
+	markdownRenderer := renderer.NewMarkdownRenderer("./pages/content/posts", topics)
+	if err := markdownRenderer.Render(bus, &wg); err != nil {
 		log.Fatalf("failed to initialize markdown renderer: %v", err)
 	}
 
@@ -81,6 +106,7 @@ func main() {
 		log.Fatalf("failed to get random personas: %v", err)
 	}
 	var personaNames []string
+	var chas []*cha.Cha
 	for _, p := range personas {
 		llmClient := llm.NewGemini(ctx, projectId, location, "gemini-2.5-flash-lite")
 		chaInstance := cha.NewCha(
@@ -90,28 +116,38 @@ func main() {
 			llmClient,
 			bus,
 			turnManager,
+			sup,
+			topics,
 		)
+		chas = append(chas, chaInstance)
 		personaNames = append(personaNames, p.DisplayName)
 		chaInstance.Start()
 		slog.Info("Started Cha", "personaId", p.PersonaId, "displayName", p.DisplayName)
 	}
 
-	// 最初の話題を送信
+	// 参加者のアナウンス
 	if err := bus.Broadcast(&message.Message{
 		From: &persona.Persona{},
-		Text: fmt.Sprintf("話題は「%s」。 参加者は %s の計 %d 名です。", *topic, strings.Join(personaNames, "、"), len(personas)),
+		Text: fmt.Sprintf("参加者は %s の計 %d 名です。", strings.Join(personaNames, "、"), len(personas)),
 		At:   time.Now(),
 		Kind: message.KindSystem,
-		Meta: map[string]string{
-			"topic": *topic,
-		},
 	}); err != nil {
 		panic(fmt.Errorf("failed to broadcast initial message: %w", err))
 	}
 
 	// ctx.Done() 待ち
 	<-ctx.Done()
-	time.Sleep(500 * time.Millisecond) // 残りの出力を拾う余裕
-	fmt.Println("")
-	fmt.Println("Shutting down...")
+
+	// 1. すべてのChaに発話の停止を通知
+	for _, c := range chas {
+		c.End()
+	}
+
+	// 2. メッセージバスを閉じて、新しいメッセージの配信を停止
+	bus.Close()
+
+	// 3. すべてのレンダラーが処理を完了するのを待つ
+	wg.Wait()
+
+	slog.Info("All components shut down gracefully.")
 }

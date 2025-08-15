@@ -43,49 +43,22 @@ func (g *Gemini) Generate(ctx context.Context, input GenerateInput) (string, err
 		})
 	}
 
-	sysText := strings.TrimSpace(fmt.Sprintf(`
-You are "%s".
-Act strictly as this character.
-
-Personality: %s
-Gender tag: %s
-Speaking style rules: %s
-Catchphrases (use occasionally, not every turn): %s
-
-Output rules:
-STRICT OUTPUT RULES (MANDATORY):
-- Reply in Japanese ONLY.
-- The conversation history may include suffixes like "(name)" (e.g., "(Rikeo)", "(Yoka)"). These are INTERNAL markers.
-- Output the message TEXT ONLY — no names, roles, labels, tags, or brackets.
-- Never write anyone else’s lines or continue the dialogue. Your reply is your line only.
-- Exactly ONE utterance. No multiple turns, no stage directions.
-- Keep it concise (about %d Japanese characters).
-
-If unsure, produce a short, neutral line consistent with the persona. Do NOT add any prefix.`,
-		input.Persona.DisplayName,
-		input.Persona.Tagline,
-		input.Persona.Gender,
-		input.Persona.StyleTag,
-		strings.Join(input.Persona.Catchphrases, ", "),
-		input.Persona.DefaultMaxChars,
-	))
+	sysText := buildSystemPrompt(input)
 
 	var temp float32 = 0.3
 	cfg := &genai.GenerateContentConfig{
 		Temperature:     &temp,
-		MaxOutputTokens: 200, // 文字数ではなくトークン。返却後にruneで切る
+		MaxOutputTokens: 200,
 		SystemInstruction: &genai.Content{
 			Role:  genai.RoleUser,
 			Parts: []*genai.Part{{Text: sysText}},
 		},
-		// 任意: 名前入りで台本化しそうならストップ語を置く
 		StopSequences: []string{
-			fmt.Sprintf("(%s)", input.Persona.DisplayName), // 自分の名前が出たらストップ
-			"()", // 何もない括弧はストップ
+			fmt.Sprintf("(%s)", input.Persona.DisplayName),
+			"()",
 		},
 	}
 
-	// 履歴側（contents）はそのまま渡す
 	resp, err := g.client.Models.GenerateContent(ctx, g.model, contents, cfg)
 	if err != nil {
 		return "", fmt.Errorf("llm.Gemini.Generate: %w", err)
@@ -93,25 +66,68 @@ If unsure, produce a short, neutral line consistent with the persona. Do NOT add
 
 	txt := extractText(resp)
 
-	// “文字数”としてはPersonaの既定で丸める（runeベース）
-	maxChars := int(input.Persona.DefaultMaxChars)
-	if maxChars <= 0 {
-		maxChars = 120
+	return oneLine(txt), nil
+}
+
+// buildSystemPrompt は、LLMに渡すシステムプロンプトを構築します。
+func buildSystemPrompt(input GenerateInput) string {
+	var p strings.Builder
+
+	// --- 1. Prime Directive: 存在意義 ---
+	p.WriteString("You are an actor playing a character in an improvisational play.\n")
+	p.WriteString(fmt.Sprintf("Your character's name is %s.\n", input.Persona.DisplayName))
+	p.WriteString("Your single, most important goal is to stay in character at all times.\n\n")
+
+	// --- 2. Character Profile: 人格と魂 ---
+	p.WriteString("## Character Profile\n")
+	p.WriteString(fmt.Sprintf("Primary Personality (Tagline): %s\n", input.Persona.Tagline))
+	p.WriteString(fmt.Sprintf("Gender Influence: Your gender is %s. Let this subtly influence your speech, but your primary personality is defined by your tagline. Avoid strong, common stereotypes.\n\n", input.Persona.Gender))
+
+	// --- 3. Speech & Style Guide: 話し方の指針 ---
+	p.WriteString("## Speech & Style Guide\n")
+	p.WriteString(fmt.Sprintf("General Style: %s\n", input.Persona.StyleTag))
+	if len(input.Persona.Catchphrases) > 0 {
+		p.WriteString(fmt.Sprintf("Catchphrases: Use these occasionally for flavor, but do not force them: %s\n", strings.Join(input.Persona.Catchphrases, ", ")))
 	}
-	return trimRunes(oneLine(txt), maxChars), nil
+	p.WriteString("\n")
+
+	// --- 4. Today's Conversation Starters: 今日の雑談ネタ ---
+	if len(input.Topics) > 0 {
+		p.WriteString("## Today's Conversation Starters\n")
+		p.WriteString("Use the following topics as a loose basis for your conversation. You can refer to them, combine them, or ignore them if the conversation flows naturally elsewhere.\n")
+		for i, t := range input.Topics {
+			p.WriteString(fmt.Sprintf("Topic #%d: %s\nSummary: %s\nURL: %s\n---\n", i+1, t.Title, t.Summary, t.SourceURL))
+		}
+		p.WriteString("\n")
+	}
+
+	// --- 5. Situational Context: 現在の状況 ---
+	if input.MaxTurns > 0 {
+		p.WriteString("## Situational Context\n")
+		p.WriteString(fmt.Sprintf("This is turn %d of a %d turn conversation.\n\n", input.CurrentTurn, input.MaxTurns))
+	}
+
+	// --- 6. Technical Output Specification: 出力仕様（最重要ルール） ---
+	p.WriteString("## Technical Output Specification\n")
+	p.WriteString("Follow these rules STRICTLY. This is mandatory.\n")
+	p.WriteString("1.  **The Golden Rule:** Your reply must be the character's dialogue text ONLY.\n")
+	p.WriteString(fmt.Sprintf("2.  **How to Follow Rule #1:** A common mistake is to start your reply with a prefix like `(%s):`. This is forbidden. Your reply MUST begin *directly* with the first word of your dialogue.\n", input.Persona.DisplayName))
+		p.WriteString("3.  **Language:** Reply in Japanese ONLY.\n")
+	p.WriteString(fmt.Sprintf("4.  **Conciseness:** Keep it concise (around %d Japanese characters).\n", input.Persona.DefaultMaxChars))
+	p.WriteString("5.  **Single Utterance:** Provide exactly ONE utterance. Do not write a script with multiple lines or other characters' dialogue.\n")
+
+	return p.String()
 }
 
 func extractText(res *genai.GenerateContentResponse) string {
 	if res == nil || len(res.Candidates) == 0 {
 		return ""
 	}
-	// 最も確度が高い候補のテキスト部分のみ
 	for _, p := range res.Candidates[0].Content.Parts {
 		if p.Text != "" {
 			return p.Text
 		}
 	}
-	// 念のため他候補も走査
 	for _, c := range res.Candidates {
 		for _, p := range c.Content.Parts {
 			if p.Text != "" {
@@ -128,14 +144,6 @@ func oneLine(s string) string {
 		s = strings.ReplaceAll(s, "  ", " ")
 	}
 	return strings.TrimSpace(s)
-}
-
-func trimRunes(s string, n int) string {
-	r := []rune(s)
-	if n > 0 && len(r) > n {
-		return string(r[:n])
-	}
-	return s
 }
 
 var _ LLM = &Gemini{}

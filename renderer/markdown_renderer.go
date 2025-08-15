@@ -1,7 +1,6 @@
 package renderer
 
 import (
-	"context"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -12,11 +11,13 @@ import (
 	"github.com/sat8bit/kaigi/bus"
 	"github.com/sat8bit/kaigi/message"
 	"github.com/sat8bit/kaigi/persona"
+	"github.com/sat8bit/kaigi/topic"
 )
 
-func NewMarkdownRenderer(outputDir string) *MarkdownRenderer {
+func NewMarkdownRenderer(outputDir string, topics []*topic.Topic) *MarkdownRenderer {
 	return &MarkdownRenderer{
 		outputDir:    outputDir,
+		topics:       topics,
 		messages:     make([]*message.Message, 0, 100),
 		participants: make(map[string]*persona.Persona),
 	}
@@ -25,32 +26,27 @@ func NewMarkdownRenderer(outputDir string) *MarkdownRenderer {
 // MarkdownRenderer は、会話のログをMarkdownファイルとして書き出すレンダラーです。
 type MarkdownRenderer struct {
 	outputDir    string
-	topic        string
+	topics       []*topic.Topic // ★ 今日の話題を保持
 	mu           sync.Mutex
 	messages     []*message.Message
 	participants map[string]*persona.Persona
 }
 
 // Render はバスを購読し、会話のログを収集します。
-// context が Done になると、収集したログをファイルに書き出します。
-func (m *MarkdownRenderer) Render(ctx context.Context, bus bus.Bus) error {
+// バスのチャネルが閉じられると、収集したログをファイルに書き出します。
+func (m *MarkdownRenderer) Render(bus bus.Bus, wg *sync.WaitGroup) error {
 	ch := bus.Subscribe()
 
+	wg.Add(1)
 	go func() {
-		for {
-			select {
-			case <-ctx.Done():
-				// プログラム終了時にファイルに書き出す
-				if err := m.writeToFile(); err != nil {
-					fmt.Fprintf(os.Stderr, "failed to write markdown log: %v\n", err)
-				}
-				return
-			case msg, ok := <-ch:
-				if !ok {
-					return
-				}
-				m.addMessage(msg)
-			}
+		defer wg.Done()
+
+		for msg := range ch {
+			m.addMessage(msg)
+		}
+
+		if err := m.writeToFile(); err != nil {
+			fmt.Fprintf(os.Stderr, "failed to write markdown log: %v\n", err)
 		}
 	}()
 
@@ -60,13 +56,6 @@ func (m *MarkdownRenderer) Render(ctx context.Context, bus bus.Bus) error {
 func (m *MarkdownRenderer) addMessage(msg *message.Message) {
 	m.mu.Lock()
 	defer m.mu.Unlock()
-
-	// 最初のシステムメッセージからトピックを決定する
-	if m.topic == "" && msg.IsSystemMessage() {
-		if topic, ok := msg.Meta["topic"]; ok {
-			m.topic = topic
-		}
-	}
 
 	// 参加者を記録する（システムメッセージと、すでに記録済みのペルソナは除く）
 	if !msg.IsSystemMessage() {
@@ -89,14 +78,18 @@ func (m *MarkdownRenderer) writeToFile() error {
 	var sb strings.Builder
 
 	// --- HugoのFront Matterを生成 ---
-	// 参加者の名前をタグ用に収集
 	var participantNames []string
 	for _, p := range m.participants {
 		participantNames = append(participantNames, fmt.Sprintf("\"%s\"", p.DisplayName))
 	}
-	
+
+	pageTitle := "自由な雑談"
+	if len(m.topics) > 0 {
+		pageTitle = m.topics[0].Title
+	}
+
 	sb.WriteString("+++\n")
-	sb.WriteString(fmt.Sprintf("title = \"%s\"\n", m.topic))
+	sb.WriteString(fmt.Sprintf("title = \"%s\"\n", pageTitle))
 	sb.WriteString(fmt.Sprintf("date = %s\n", time.Now().Format(time.RFC3339)))
 	sb.WriteString(fmt.Sprintf("tags = [%s]\n", strings.Join(participantNames, ", ")))
 	sb.WriteString("+++\n\n")
@@ -105,7 +98,7 @@ func (m *MarkdownRenderer) writeToFile() error {
 	for _, msg := range m.messages {
 		if msg.IsSystemMessage() {
 			sb.WriteString(fmt.Sprintf("> %s\n\n", msg.Text))
-			break // 最初のものだけで良い
+			break
 		}
 	}
 	sb.WriteString("---\n\n")
@@ -115,12 +108,22 @@ func (m *MarkdownRenderer) writeToFile() error {
 	for _, p := range m.participants {
 		sb.WriteString(fmt.Sprintf("- **%s:** %s\n", p.DisplayName, p.Tagline))
 	}
-	sb.WriteString("\n---\n\n")
-
+	
 	// --- 会話ログを書き出す ---
+	sb.WriteString("\n---\n\n")
+	sb.WriteString("## 今日の雑談\n\n") // ★ 新しい見出し
 	for _, msg := range m.messages {
 		if !msg.IsSystemMessage() {
 			sb.WriteString(fmt.Sprintf("**%s:** %s\n\n", msg.From.DisplayName, msg.Text))
+		}
+	}
+
+	// --- 今日の話題を最後に追記 ---
+	if len(m.topics) > 0 {
+		sb.WriteString("\n---\n\n")
+		sb.WriteString("## 今日の話題\n\n")
+		for _, t := range m.topics {
+			sb.WriteString(fmt.Sprintf("- [%s](%s)\n", t.Title, t.SourceURL))
 		}
 	}
 
@@ -129,8 +132,7 @@ func (m *MarkdownRenderer) writeToFile() error {
 		return fmt.Errorf("failed to create output directory: %w", err)
 	}
 
-	// ファイル名を生成（トピックとタイムスタンプ）
-	fileName := fmt.Sprintf("%s-%s.md", m.topic, time.Now().Format("20060102-150405"))
+	fileName := fmt.Sprintf("%s.md", time.Now().Format("20060102-150405"))
 	filePath := filepath.Join(m.outputDir, fileName)
 
 	return os.WriteFile(filePath, []byte(sb.String()), 0644)

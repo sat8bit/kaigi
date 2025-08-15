@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"log/slog"
+	"math/rand"
 	"sync"
 	"time"
 
@@ -11,6 +12,7 @@ import (
 	"github.com/sat8bit/kaigi/llm"
 	"github.com/sat8bit/kaigi/message"
 	"github.com/sat8bit/kaigi/persona"
+	"github.com/sat8bit/kaigi/topic"
 	"github.com/sat8bit/kaigi/turn"
 )
 
@@ -21,34 +23,50 @@ func NewCha(
 	llmInstance llm.LLM,
 	bus bus.Bus,
 	turnManager turn.Manager,
+	turnProvider turn.TurnProvider,
+	topics []*topic.Topic,
 ) *Cha {
-	// 最後に話した時刻を「MinGapSeconds」秒前に設定することで、
-	// 起動後すぐに発言条件を満たしつつ、各Chaの発言タイミングを自然にずらす。
-	initialLastTalk := time.Now().Add(-time.Duration(persona.MinGapSeconds) * time.Second)
+	// 初期lastTalkにランダムな遅延を追加して、起動直後の発話タイミングをずらす
+	initialLastTalk := time.Now().Add(
+		-time.Duration(persona.MinGapSeconds)*time.Second,
+	).Add(
+		-time.Duration(rand.Intn(5000))*time.Millisecond, // 0〜5秒のランダムな遅延
+	)
 
 	return &Cha{
-		Context:     ctx,
-		ChaId:       chaId,
-		Persona:     persona,
-		inbox:       make([]*message.Message, 0, 10),
-		lastTalk:    initialLastTalk,
-		llm:         llmInstance,
-		bus:         bus,
-		turnManager: turnManager,
+		Context:      ctx,
+		ChaId:        chaId,
+		Persona:      persona,
+		inbox:        make([]*message.Message, 0, 10),
+		lastTalk:     initialLastTalk,
+		llm:          llmInstance,
+		bus:          bus,
+		turnManager:  turnManager,
+		turnProvider: turnProvider,
+		topics:       topics,
 	}
 }
 
 type Cha struct {
-	Context     context.Context
-	ChaId       string
-	Persona     *persona.Persona
-	llm         llm.LLM
-	turnManager turn.Manager
-	bus         bus.Bus
+	Context      context.Context
+	ChaId        string
+	Persona      *persona.Persona
+	llm          llm.LLM
+	turnManager  turn.Manager
+	turnProvider turn.TurnProvider
+	bus          bus.Bus
+	topics       []*topic.Topic
 
 	mu       sync.Mutex
 	inbox    []*message.Message
 	lastTalk time.Time
+	stopped  bool
+}
+
+func (c *Cha) End() {
+	c.mu.Lock()
+	defer c.mu.Unlock()
+	c.stopped = true
 }
 
 func (c *Cha) Start() {
@@ -81,12 +99,16 @@ func (c *Cha) Start() {
 	}()
 }
 
-// tryToTalk は発話条件をチェックし、条件を満たしていれば発話を試みます。
-// このメソッドはgoroutineとして安全に呼び出すことができます。
 func (c *Cha) tryToTalk() {
+	c.mu.Lock()
+	if c.stopped {
+		c.mu.Unlock()
+		return
+	}
+	c.mu.Unlock()
+
 	// --- 意思決定フェーズ ---
 	c.mu.Lock()
-	// 発話するべきか（最低間隔は空いているか）をチェック
 	if time.Since(c.lastTalk).Seconds() < float64(c.Persona.MinGapSeconds) {
 		c.mu.Unlock()
 		return
@@ -95,18 +117,23 @@ func (c *Cha) tryToTalk() {
 
 	// --- 発話権獲得フェーズ ---
 	if err := c.turnManager.Acquire(c.Context); err != nil {
-		return // コンテキストがキャンセルされたなどで取得に失敗
+		return
 	}
 	defer c.turnManager.Release()
 
 	// --- 発話実行フェーズ ---
-	// 発話するので、最終発話時刻を更新
+	c.mu.Lock()
+	inboxCopy := make([]*message.Message, len(c.inbox))
+	copy(inboxCopy, c.inbox)
+	c.mu.Unlock()
 
-	// LLMに発言を生成させる
 	resp, err := c.llm.Generate(c.Context, llm.GenerateInput{
 		ChaId:          c.ChaId,
 		Persona:        c.Persona,
-		RecentMessages: c.inbox,
+		RecentMessages: inboxCopy,
+		CurrentTurn:    c.turnProvider.GetCurrentTurn(),
+		MaxTurns:       c.turnProvider.GetMaxTurns(),
+		Topics:         c.topics,
 	})
 
 	if err != nil {
@@ -115,9 +142,10 @@ func (c *Cha) tryToTalk() {
 	}
 
 	now := time.Now()
+	c.mu.Lock()
 	c.lastTalk = now
+	c.mu.Unlock()
 
-	// 生成された発言をバスにブロードキャスト
 	if err := c.bus.Broadcast(&message.Message{
 		From: c.Persona,
 		Text: resp,

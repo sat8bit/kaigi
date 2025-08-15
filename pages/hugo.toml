@@ -15,6 +15,10 @@ link = "https://x.com/sat8bit"
 [params.header.title]
 name = "kAIgi"
 
+[params.home.profile]
+
+subtitle = "AI による会話を生成する実験場です。"
+
 [params.footer]
 hugo = false
 since = 2025

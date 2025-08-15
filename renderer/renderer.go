@@ -1,7 +1,11 @@
 package renderer
 
-import "github.com/sat8bit/kaigi/bus"
+import (
+	"sync"
+
+	"github.com/sat8bit/kaigi/bus"
+)
 
 type Renderer interface {
-	Render(bus bus.Bus) error
+	Render(bus bus.Bus, wg *sync.WaitGroup) error
 }

@@ -8,4 +8,5 @@ import (
 type Bus interface {
 	Broadcast(m *message.Message) error
 	Subscribe() <-chan *message.Message
+	Close()
 }

@@ -75,8 +75,7 @@ func (b *MemoryBus) Subscribe() <-chan *message.Message {
 }
 
 // Close はバスを閉じ、すべての購読者チャネルをクローズします。
-// このメソッドはインターフェースには含まれていませんが、アプリケーションの
-// 安全なシャットダウンのために役立ちます。
+// これにより、range ch ループで待機しているすべてのゴルーチンが終了します。
 func (b *MemoryBus) Close() {
 	b.mu.Lock()
 	defer b.mu.Unlock()

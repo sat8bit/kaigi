@@ -2,6 +2,7 @@ package renderer
 
 import (
 	"fmt"
+	"sync"
 	"time"
 
 	"github.com/sat8bit/kaigi/bus"
@@ -15,11 +16,13 @@ func NewConsoleRenderer() *ConsoleRenderer {
 type ConsoleRenderer struct {
 }
 
-func (c *ConsoleRenderer) Render(bus bus.Bus) error {
+func (c *ConsoleRenderer) Render(bus bus.Bus, wg *sync.WaitGroup) error {
 	// コンソールに出力するための Subscriber
 	ch := bus.Subscribe()
 
+	wg.Add(1) // ★ WaitGroupにレンダリングゴルーチンを登録
 	go func() {
+		defer wg.Done() // ★ ゴルーチン終了時に完了を通知
 		for o := range ch {
 			switch o.Kind {
 			case message.KindSystem:
