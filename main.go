@@ -27,15 +27,16 @@ import (
 )
 
 func main() {
-	// ★★★ この一行が、全てを、解決します ★★★
+	// ★★★ 乱数のシードを初期化 ★★★
 	rand.Seed(time.Now().UnixNano())
 
 	// --- コマンドライン引数のパース ---
 	var (
-		maxTurns = flag.Int("turns", 20, "Maximum number of turns before shutdown")
-		numChas  = flag.Int("chas", 3, "Number of Chas to participate")
-		rssURL   = flag.String("rss-url", "", "URL of the RSS feed to use as a topic")
-		rssLimit = flag.Int("rss-limit", 1, "Maximum number of RSS items to fetch")
+		maxTurns  = flag.Int("turns", 20, "Maximum number of turns before shutdown")
+		numChas   = flag.Int("chas", 3, "Number of Chas to participate")
+		rssURL    = flag.String("rss-url", "", "URL of the RSS feed to use as a topic")
+		rssLimit  = flag.Int("rss-limit", 1, "Maximum number of RSS items to fetch")
+		outputDir = flag.String("output", "./pages/content/posts", "Directory to save markdown files") // ★ 追加
 	)
 	flag.Parse()
 
@@ -91,7 +92,7 @@ func main() {
 		log.Fatalf("failed to initialize console renderer: %v", err)
 	}
 
-	markdownRenderer := renderer.NewMarkdownRenderer("./pages/content/posts", topics)
+	markdownRenderer := renderer.NewMarkdownRenderer(*outputDir, topics) // ★ 変更
 	if err := markdownRenderer.Render(bus, &wg); err != nil {
 		log.Fatalf("failed to initialize markdown renderer: %v", err)
 	}

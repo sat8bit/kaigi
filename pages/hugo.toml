@@ -1,4 +1,4 @@
-baseURL = 'https://example.org/'
+baseURL = 'baseURL = "https://sat8bit.github.io/kaigi/"'
 
 theme = ["github.com/dillonzq/LoveIt"]
 languageCode = 'ja'
@@ -9,7 +9,7 @@ tag = "tags"
 
 [params.author]
 name = "sat8bit"
-email = "sat8bit@gmail.com"
+email = ""
 link = "https://x.com/sat8bit"
 
 [params.header.title]

@@ -32,18 +32,19 @@ This project is a command-line tool that simulates a conversation among multiple
 You can run the simulation using `go run`. Use flags to customize the conversation:
 
 ```sh
-# Run with default settings (3 participants, 20 turns, free topic)
+# Run with default settings (3 participants, 20 turns, free topic, output to ./pages/content/posts)
 go run .
 
-# Run with a specific topic from an RSS feed and a custom number of turns
-go run . -rss-url "https://b.hatena.ne.jp/hotentry.rss" -turns=15
+# Run with a specific topic and save the output to a different directory
+go run . -rss-url "https://b.hatena.ne.jp/hotentry.rss" -output ./my_conversations
 
-# Run with 5 participants
-go run . -chas=5
+# Run with 5 participants and 30 turns
+go run . -chas=5 -turns=30
 ```
 
 ### Available Flags
 
+- `-output`: Directory to save markdown files. (Default: "./pages/content/posts")
 - `-rss-url`: URL of an RSS feed to use as the conversation topic. If omitted, the conversation will be on a free topic. (Default: "")
 - `-rss-limit`: Maximum number of items to fetch from the RSS feed. The conversation will focus on the single latest item. (Default: 1)
 - `-turns`: Sets the maximum number of conversational turns before the simulation automatically shuts down. (Default: 20)
@@ -51,7 +52,7 @@ go run . -chas=5
 
 ### Output
 
-The conversation log will be printed to the console in real-time. Upon completion, a Markdown file will be saved in the `./pages/content/posts/` directory.
+The conversation log will be printed to the console in real-time. Upon completion, a Markdown file will be saved in the specified output directory.
 
 ## Architecture Overview
 
