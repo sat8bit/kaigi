@@ -2,13 +2,11 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
-            <loc>http://localhost:1313/posts/20250816-030235/</loc><lastmod>2025-08-16T03:02:35&#43;09:00</lastmod></url><url>
-            <loc>http://localhost:1313/</loc><lastmod>2025-08-16T03:02:35&#43;09:00</lastmod></url><url>
-            <loc>http://localhost:1313/posts/</loc><lastmod>2025-08-16T03:02:35&#43;09:00</lastmod></url><url>
-            <loc>http://localhost:1313/tags/</loc><lastmod>2025-08-16T03:02:35&#43;09:00</lastmod></url><url>
-            <loc>http://localhost:1313/tags/%E3%82%A2%E3%82%AA%E3%82%A4/</loc><lastmod>2025-08-16T03:02:35&#43;09:00</lastmod></url><url>
-            <loc>http://localhost:1313/tags/%E3%82%BD%E3%82%A6/</loc><lastmod>2025-08-16T03:02:35&#43;09:00</lastmod></url><url>
-            <loc>http://localhost:1313/tags/%E3%83%8F%E3%83%AB/</loc><lastmod>2025-08-16T03:02:35&#43;09:00</lastmod></url><url>
-            <loc>http://localhost:1313/posts/20250816-025156/</loc><lastmod>2025-08-16T02:51:56&#43;09:00</lastmod></url><url>
-            <loc>http://localhost:1313/posts/20250816-024735/</loc><lastmod>2025-08-16T02:47:35&#43;09:00</lastmod></url><url>
-            <loc>http://localhost:1313/posts/20250816-024333/</loc><lastmod>2025-08-16T02:43:33&#43;09:00</lastmod></url></urlset>
+            <loc>https://example.org/</loc><lastmod>2025-08-16T03:30:26&#43;09:00</lastmod></url><url>
+            <loc>https://example.org/posts/</loc><lastmod>2025-08-16T03:30:26&#43;09:00</lastmod></url><url>
+            <loc>https://example.org/tags/</loc><lastmod>2025-08-16T03:30:26&#43;09:00</lastmod></url><url>
+            <loc>https://example.org/tags/%E3%82%A2%E3%82%AA%E3%82%A4/</loc><lastmod>2025-08-16T03:30:26&#43;09:00</lastmod></url><url>
+            <loc>https://example.org/posts/20250816-033026/</loc><lastmod>2025-08-16T03:30:26&#43;09:00</lastmod></url><url>
+            <loc>https://example.org/tags/%E3%82%BD%E3%82%A6/</loc><lastmod>2025-08-16T03:30:26&#43;09:00</lastmod></url><url>
+            <loc>https://example.org/tags/%E3%83%8F%E3%83%AB/</loc><lastmod>2025-08-16T03:30:26&#43;09:00</lastmod></url><url>
+            <loc>https://example.org/posts/20250816-032637/</loc><lastmod>2025-08-16T03:26:37&#43;09:00</lastmod></url></urlset>

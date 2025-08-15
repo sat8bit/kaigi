@@ -32,11 +32,11 @@ This project is a command-line tool that simulates a conversation among multiple
 You can run the simulation using `go run`. Use flags to customize the conversation:
 
 ```sh
-# Run with default settings (3 participants, 20 turns, topic: "今日の天気について")
+# Run with default settings (3 participants, 20 turns, free topic)
 go run .
 
-# Run with a custom topic and number of turns
-go run . -topic="AIに自我は宿るのか？" -turns=15
+# Run with a specific topic from an RSS feed and a custom number of turns
+go run . -rss-url "https://b.hatena.ne.jp/hotentry.rss" -turns=15
 
 # Run with 5 participants
 go run . -chas=5
@@ -44,13 +44,14 @@ go run . -chas=5
 
 ### Available Flags
 
-- `-topic`: Sets the initial topic for the conversation. (Default: "今日の天気について")
+- `-rss-url`: URL of an RSS feed to use as the conversation topic. If omitted, the conversation will be on a free topic. (Default: "")
+- `-rss-limit`: Maximum number of items to fetch from the RSS feed. The conversation will focus on the single latest item. (Default: 1)
 - `-turns`: Sets the maximum number of conversational turns before the simulation automatically shuts down. (Default: 20)
 - `-chas`: Sets the number of AI agents participating in the conversation. (Default: 3)
 
 ### Output
 
-The conversation log will be printed to the console in real-time. Upon completion, a Markdown file will be saved in the `./content/posts/` directory.
+The conversation log will be printed to the console in real-time. Upon completion, a Markdown file will be saved in the `./pages/content/posts/` directory.
 
 ## Architecture Overview
 
