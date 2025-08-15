@@ -66,7 +66,7 @@ func main() {
 		log.Fatalf("failed to initialize console renderer: %v", err)
 	}
 
-	markdownRenderer := renderer.NewMarkdownRenderer("./content/posts")
+	markdownRenderer := renderer.NewMarkdownRenderer("./pages/content/posts")
 	if err := markdownRenderer.Render(ctx, bus); err != nil {
 		log.Fatalf("failed to initialize markdown renderer: %v", err)
 	}

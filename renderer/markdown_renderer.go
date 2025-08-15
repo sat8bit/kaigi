@@ -11,21 +11,24 @@ import (
 
 	"github.com/sat8bit/kaigi/bus"
 	"github.com/sat8bit/kaigi/message"
+	"github.com/sat8bit/kaigi/persona"
 )
 
 func NewMarkdownRenderer(outputDir string) *MarkdownRenderer {
 	return &MarkdownRenderer{
-		outputDir: outputDir,
-		messages:  make([]*message.Message, 0, 100),
+		outputDir:    outputDir,
+		messages:     make([]*message.Message, 0, 100),
+		participants: make(map[string]*persona.Persona),
 	}
 }
 
 // MarkdownRenderer は、会話のログをMarkdownファイルとして書き出すレンダラーです。
 type MarkdownRenderer struct {
-	outputDir string
-	topic     string
-	mu        sync.Mutex
-	messages  []*message.Message
+	outputDir    string
+	topic        string
+	mu           sync.Mutex
+	messages     []*message.Message
+	participants map[string]*persona.Persona
 }
 
 // Render はバスを購読し、会話のログを収集します。
@@ -60,9 +63,15 @@ func (m *MarkdownRenderer) addMessage(msg *message.Message) {
 
 	// 最初のシステムメッセージからトピックを決定する
 	if m.topic == "" && msg.IsSystemMessage() {
-		// メタデータからトピックを取得する
 		if topic, ok := msg.Meta["topic"]; ok {
 			m.topic = topic
+		}
+	}
+
+	// 参加者を記録する（システムメッセージと、すでに記録済みのペルソナは除く）
+	if !msg.IsSystemMessage() {
+		if _, exists := m.participants[msg.From.PersonaId]; !exists {
+			m.participants[msg.From.PersonaId] = msg.From
 		}
 	}
 
@@ -80,17 +89,37 @@ func (m *MarkdownRenderer) writeToFile() error {
 	var sb strings.Builder
 
 	// --- HugoのFront Matterを生成 ---
+	// 参加者の名前をタグ用に収集
+	var participantNames []string
+	for _, p := range m.participants {
+		participantNames = append(participantNames, fmt.Sprintf("\"%s\"", p.DisplayName))
+	}
+	
 	sb.WriteString("+++\n")
 	sb.WriteString(fmt.Sprintf("title = \"%s\"\n", m.topic))
 	sb.WriteString(fmt.Sprintf("date = %s\n", time.Now().Format(time.RFC3339)))
-	sb.WriteString("tags = [\"AI-Kaigi\"]\n")
+	sb.WriteString(fmt.Sprintf("tags = [%s]\n", strings.Join(participantNames, ", ")))
 	sb.WriteString("+++\n\n")
 
-	// --- 会話ログをMarkdown形式で生成 ---
+	// --- 最初のシステムメッセージを書き出す ---
 	for _, msg := range m.messages {
 		if msg.IsSystemMessage() {
 			sb.WriteString(fmt.Sprintf("> %s\n\n", msg.Text))
-		} else {
+			break // 最初のものだけで良い
+		}
+	}
+	sb.WriteString("---\n\n")
+
+	// --- 登場人物紹介を書き出す ---
+	sb.WriteString("## 登場人物\n\n")
+	for _, p := range m.participants {
+		sb.WriteString(fmt.Sprintf("- **%s:** %s\n", p.DisplayName, p.Tagline))
+	}
+	sb.WriteString("\n---\n\n")
+
+	// --- 会話ログを書き出す ---
+	for _, msg := range m.messages {
+		if !msg.IsSystemMessage() {
 			sb.WriteString(fmt.Sprintf("**%s:** %s\n\n", msg.From.DisplayName, msg.Text))
 		}
 	}

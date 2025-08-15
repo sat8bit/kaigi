@@ -2,8 +2,6 @@ package supervisor
 
 import (
 	"context"
-	"fmt"
-	"os"
 	"sync"
 
 	"github.com/sat8bit/kaigi/bus"
@@ -40,9 +38,7 @@ func (s *Supervisor) Start() {
 
 			s.mu.Lock()
 			s.turnCount++
-			fmt.Fprintf(os.Stderr, "[Supervisor] Turn %d/%d\n", s.turnCount, s.maxTurns)
 			if s.turnCount >= s.maxTurns {
-				fmt.Fprintf(os.Stderr, "[Supervisor] Reached max turns. Shutting down...\n")
 				s.cancelFunc() // 上限に達したので停止信号を送る
 				s.mu.Unlock()
 				return

@@ -1,0 +1,23 @@
+baseURL = 'https://example.org/'
+
+theme = "LoveIt"
+languageCode = 'ja'
+title = 'kAIgi'
+
+[taxonomies]
+tag = "tags"
+
+[params.author]
+name = "sat8bit"
+email = "sat8bit@gmail.com"
+link = "https://x.com/sat8bit"
+
+[params.header.title]
+name = "kAIgi"
+
+[params.footer]
+hugo = false
+since = 2025
+
+[params.app]
+title = "kAIgi"
