@@ -1,6 +1,6 @@
 baseURL = 'https://example.org/'
 
-theme = "LoveIt"
+theme = ["github.com/dillonzq/LoveIt"]
 languageCode = 'ja'
 title = 'kAIgi'
 
