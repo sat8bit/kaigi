@@ -3,7 +3,7 @@ name: Generate Post it
 on:
   workflow_dispatch: # Allows manual triggering
   schedule:
-    - cron: '0 22 * * *' # Runs every day at 22:00 UTC (7:00 JST)
+    - cron: '15 22 * * *' # Runs every day at 22:15 UTC (7:15 JST)
 
 permissions:
   contents: write
