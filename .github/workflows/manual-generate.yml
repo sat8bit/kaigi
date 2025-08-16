@@ -1,0 +1,16 @@
+name: Manual - Generate Post
+
+on:
+  workflow_dispatch:
+    inputs:
+      rss-url:
+        description: 'URL of the RSS feed to use as a topic'
+        required: true
+        type: string
+
+jobs:
+  manual_run:
+    uses: generate-post.yml
+    with:
+      rss-url: ${{ github.event.inputs.rss-url }}
+    secrets: inherit

@@ -11,7 +11,7 @@ import (
 func NewSupervisor(maxTurns int, bus bus.Bus, cancel context.CancelFunc) *Supervisor {
 	return &Supervisor{
 		maxTurns: maxTurns,
-		bus:      bus,      // ★ 追加
+		bus:      bus, // ★ 追加
 		cancel:   cancel,
 	}
 }
@@ -33,7 +33,7 @@ func (s *Supervisor) Start() {
 				slog.Error("Error message received, shutting down.", "from", msg.From.DisplayName, "error", msg.Text)
 				s.cancel()
 				return
-			default:
+			case message.KindCha:
 				s.currentTurn++
 				if s.currentTurn >= s.maxTurns {
 					slog.Info("Max turns reached, shutting down.")

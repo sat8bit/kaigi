@@ -1,0 +1,13 @@
+name: Generate Post Social
+
+on:
+  workflow_dispatch: # Allows manual triggering
+  schedule:
+    - cron: '0 22 * * *' # Runs every day at 22:00 UTC (7:00 JST)
+
+jobs:
+  hatena_hotentry:
+    uses: generate-post.yml
+    with:
+      rss-url: "https://b.hatena.ne.jp/hotentry/social.rss"
+    secrets: inherit

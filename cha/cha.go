@@ -28,9 +28,9 @@ func NewCha(
 ) *Cha {
 	// 初期lastTalkにランダムな遅延を追加して、起動直後の発話タイミングをずらす
 	initialLastTalk := time.Now().Add(
-		-time.Duration(persona.MinGapSeconds)*time.Second,
+		-time.Duration(persona.MinGapSeconds) * time.Second,
 	).Add(
-		-time.Duration(rand.Intn(5000))*time.Millisecond, // 0〜5秒のランダムな遅延
+		-time.Duration(rand.Intn(5000)) * time.Millisecond, // 0〜5秒のランダムな遅延
 	)
 
 	return &Cha{
@@ -159,6 +159,7 @@ func (c *Cha) tryToTalk() {
 		From: c.Persona,
 		Text: resp,
 		At:   now,
+		Kind: message.KindCha,
 	}); err != nil {
 		slog.ErrorContext(c.Context, fmt.Sprintf("Cha %s: Broadcast error: %v", c.ChaId, err))
 	}

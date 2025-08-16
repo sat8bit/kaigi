@@ -6,21 +6,24 @@ import (
 	"log/slog"
 	"os"
 	"path/filepath"
+	"sort"
+	"strings"
 	"sync"
 	"text/template"
 	"time"
 
 	"github.com/sat8bit/kaigi/bus"
 	"github.com/sat8bit/kaigi/message"
+	"github.com/sat8bit/kaigi/persona"
 	"github.com/sat8bit/kaigi/topic"
 )
 
-const markdownTemplate = `---+
-slug: "{{ .Slug }}"
-date: "{{ .Date }}"
-title: "{{ .Title }}"
-tags: [{{ .Tags }}]
----
+// ★ 修正: フロントマターの形式を `+++` に変更
+const markdownTemplate = `+++
+title = "{{ .Title }}"
+date = "{{ .Date }}"
+tags = [{{ .Tags }}]
++++
 
 {{ .Body }}
 `
@@ -48,8 +51,6 @@ func (r *MarkdownRenderer) Render(bus bus.Bus, wg *sync.WaitGroup) error {
 			inbox = append(inbox, msg)
 		}
 
-		// ★★★ このチェックを追加 ★★★
-		// エラーメッセージが含まれている場合は、ファイルを生成しない
 		for _, msg := range inbox {
 			if msg.Kind == message.KindError {
 				slog.Info("Error message detected, skipping markdown generation.")
@@ -57,7 +58,7 @@ func (r *MarkdownRenderer) Render(bus bus.Bus, wg *sync.WaitGroup) error {
 			}
 		}
 
-		if len(inbox) == 0 {
+		if len(inbox) < 2 {
 			return
 		}
 
@@ -70,34 +71,79 @@ func (r *MarkdownRenderer) Render(bus bus.Bus, wg *sync.WaitGroup) error {
 }
 
 func (r *MarkdownRenderer) render(inbox []*message.Message) error {
-	slug := time.Now().Format("2006-01-02-150405")
+	jst, err := time.LoadLocation("Asia/Tokyo")
+	if err != nil {
+		return fmt.Errorf("failed to load JST location: %w", err)
+	}
+	nowInJST := time.Now().In(jst)
+
+	slug := nowInJST.Format("20060102-150405")
+
 	title := "Kaigi Log"
 	if len(r.topics) > 0 {
 		title = r.topics[0].Title
 	}
 
-	var tags []string
-	var body string
-	participants := make(map[string]struct{})
+	// --- 1. 必要な情報を収集 ---
+	participantsMap := make(map[string]*persona.Persona)
+	var conversationLog strings.Builder
+	var systemAnnounce string
 
 	for _, msg := range inbox {
 		if msg.Kind == message.KindCha {
-			body += fmt.Sprintf("**%s**: %s\n\n", msg.From.DisplayName, msg.Text)
-			participants[fmt.Sprintf("'%s'", msg.From.DisplayName)] = struct{}{}
+			if _, ok := participantsMap[msg.From.DisplayName]; !ok {
+				participantsMap[msg.From.DisplayName] = msg.From
+			}
+			conversationLog.WriteString(fmt.Sprintf("**%s**: %s\n\n", msg.From.DisplayName, msg.Text))
 		} else if msg.Kind == message.KindSystem {
-			body += fmt.Sprintf("> %s\n\n", msg.Text)
+			systemAnnounce = fmt.Sprintf("> %s\n", msg.Text)
 		}
 	}
 
-	for p := range participants {
-		tags = append(tags, p)
+	// --- 2. 本文全体を構築 ---
+	var body strings.Builder
+
+	if systemAnnounce != "" {
+		body.WriteString(systemAnnounce)
+		body.WriteString("\n---\n\n")
 	}
+
+	// 登場人物セクション
+	participantsList := make([]*persona.Persona, 0, len(participantsMap))
+	for _, p := range participantsMap {
+		participantsList = append(participantsList, p)
+	}
+	sort.Slice(participantsList, func(i, j int) bool {
+		return participantsList[i].DisplayName < participantsList[j].DisplayName
+	})
+
+	body.WriteString("## 登場人物\n\n")
+	for _, p := range participantsList {
+		body.WriteString(fmt.Sprintf("- **%s:** %s\n", p.DisplayName, p.Tagline))
+	}
+	body.WriteString("\n---\n\n")
+
+	// 今日の雑談セクション
+	body.WriteString("## 今日の雑談\n\n")
+	body.WriteString(conversationLog.String())
+
+	// 今日の話題セクション (本文の最後)
 	if len(r.topics) > 0 {
+		body.WriteString("---\n\n")
+		body.WriteString("## 今日の話題\n\n")
 		for _, t := range r.topics {
-			tags = append(tags, fmt.Sprintf("'%s'", t.Title))
+			body.WriteString(fmt.Sprintf("- [%s](%s)\n", t.Title, t.SourceURL))
 		}
+		body.WriteString("\n")
 	}
 
+	// --- 3. フロントマター用のタグを生成 ---
+	var tags []string
+	for _, p := range participantsList {
+		tags = append(tags, fmt.Sprintf(`"%s"`, p.DisplayName)) // ダブルクォートで囲む
+	}
+
+	// --- 4. テンプレートに埋め込み ---
 	tmpl, err := template.New("markdown").Parse(markdownTemplate)
 	if err != nil {
 		return fmt.Errorf("failed to parse markdown template: %w", err)
@@ -111,10 +157,10 @@ func (r *MarkdownRenderer) render(inbox []*message.Message) error {
 		Body  string
 	}{
 		Slug:  slug,
-		Date:  time.Now().Format("2006-01-02T15:04:05-07:00"),
-		Title: title,
-		Tags:  fmt.Sprintf("[%s]", string(bytes.Join([][]byte{[]byte(fmt.Sprintf("'%s'", title))}, []byte(",")))),
-		Body:  body,
+		Date:  nowInJST.Format("2006-01-02T15:04:05-07:00"),
+		Title: fmt.Sprintf(`"%s"`, title), // ダブルクォートで囲む
+		Tags:  strings.Join(tags, ", "),
+		Body:  body.String(),
 	}
 
 	var buf bytes.Buffer
