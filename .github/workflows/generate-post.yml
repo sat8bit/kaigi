@@ -1,0 +1,49 @@
+name: Generate New Conversation Post
+
+on:
+  workflow_dispatch: # Allows manual triggering
+  schedule:
+    - cron: '0 22 * * *' # Runs every day at 22:00 UTC (7:00 JST)
+
+jobs:
+  generate_and_push:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      id-token: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud
+        id: auth
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: 'projects/${{ secrets.GOOGLE_CLOUD_PROJECT_NUMBER }}/locations/global/workloadIdentityPools/kaigi-pool/providers/kaigi-provider'
+          service_account: 'kaigi-generator@${{ secrets.GOOGLE_CLOUD_PROJECT_ID }}.iam.gserviceaccount.com'
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+
+      - name: Generate new post
+        env:
+          PROJECT_ID: ${{ secrets.GOOGLE_CLOUD_PROJECT_ID }}
+          LOCATION: 'us-central1'
+        run: go run . -rss-url "https://b.hatena.ne.jp/hotentry/social.rss"
+
+      - name: Commit and push if changed
+        run: |
+          git config --global user.name 'Kaigi Bot'
+          git config --global user.email 'kaigi-bot@users.noreply.github.com'
+          git add ./pages/content/posts/
+          # Check if there are staged changes
+          if ! git diff --staged --quiet; then
+            git commit -m "chore: Generate new conversation post"
+            git push
+          else
+            echo "No changes to commit."
+          fi
