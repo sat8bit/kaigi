@@ -36,7 +36,7 @@ func main() {
 		numChas   = flag.Int("chas", 3, "Number of Chas to participate")
 		rssURL    = flag.String("rss-url", "", "URL of the RSS feed to use as a topic")
 		rssLimit  = flag.Int("rss-limit", 1, "Maximum number of RSS items to fetch")
-		outputDir = flag.String("output", "./pages/content/posts", "Directory to save markdown files") // ★ 追加
+		outputDir = flag.String("output", "./pages/content/posts", "Directory to save markdown files")
 	)
 	flag.Parse()
 
@@ -51,9 +51,9 @@ func main() {
 		cancel()
 	}()
 
-	projectId := os.Getenv("PROJECT_ID")
+	projectId := os.Getenv("GOOGLE_CLOUD_PROJECT_ID")
 	if projectId == "" {
-		log.Fatal("set PROJECT_ID environment variable")
+		log.Fatal("set GOOGLE_CLOUD_PROJECT_ID environment variable")
 	}
 	location := os.Getenv("LOCATION")
 	if location == "" {
@@ -92,7 +92,7 @@ func main() {
 		log.Fatalf("failed to initialize console renderer: %v", err)
 	}
 
-	markdownRenderer := renderer.NewMarkdownRenderer(*outputDir, topics) // ★ 変更
+	markdownRenderer := renderer.NewMarkdownRenderer(*outputDir, topics)
 	if err := markdownRenderer.Render(bus, &wg); err != nil {
 		log.Fatalf("failed to initialize markdown renderer: %v", err)
 	}

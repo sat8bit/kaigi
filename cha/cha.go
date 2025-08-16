@@ -138,6 +138,15 @@ func (c *Cha) tryToTalk() {
 
 	if err != nil {
 		slog.ErrorContext(c.Context, fmt.Sprintf("Cha %s: LLM error: %v", c.ChaId, err))
+		// ★ エラー発生時に、エラーメッセージをブロードキャストする
+		if berr := c.bus.Broadcast(&message.Message{
+			From: c.Persona,
+			Text: fmt.Sprintf("LLM error: %v", err),
+			At:   time.Now(),
+			Kind: message.KindError,
+		}); berr != nil {
+			slog.ErrorContext(c.Context, fmt.Sprintf("Cha %s: Broadcast error on LLM error: %v", c.ChaId, berr))
+		}
 		return
 	}
 
