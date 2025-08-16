@@ -20,9 +20,9 @@ import (
 
 // ★ 修正: フロントマターの形式を `+++` に変更
 const markdownTemplate = `+++
-title = "{{ .Title }}"
-date = "{{ .Date }}"
-tags = [{{ .Tags }}]
+title = {{ .Title }}
+date = {{ .Date }}
+tags = {{ .Tags }}
 +++
 
 {{ .Body }}
@@ -157,9 +157,9 @@ func (r *MarkdownRenderer) render(inbox []*message.Message) error {
 		Body  string
 	}{
 		Slug:  slug,
-		Date:  nowInJST.Format("2006-01-02T15:04:05-07:00"),
+		Date:  fmt.Sprintf(`"%s"`, nowInJST.Format("2006-01-02T15:04:05-07:00")),
 		Title: fmt.Sprintf(`"%s"`, title), // ダブルクォートで囲む
-		Tags:  strings.Join(tags, ", "),
+		Tags:  fmt.Sprintf("[%s]", strings.Join(tags, ", ")),
 		Body:  body.String(),
 	}
 
