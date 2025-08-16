@@ -1,0 +1,18 @@
+name: Generate Post it
+
+on:
+  workflow_dispatch: # Allows manual triggering
+  schedule:
+    - cron: '0 22 * * *' # Runs every day at 22:00 UTC (7:00 JST)
+
+permissions:
+  contents: write
+  id-token: write
+  pages: write
+
+jobs:
+  hatena_hotentry_it:
+    uses: ./.github/workflows/generate-post.yml
+    with:
+      rss-url: "https://b.hatena.ne.jp/hotentry/it.rss"
+    secrets: inherit
