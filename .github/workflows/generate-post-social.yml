@@ -7,7 +7,7 @@ on:
 
 jobs:
   hatena_hotentry:
-    uses: generate-post.yml
+    uses: ./.github/workflows/generate-post.yml
     with:
       rss-url: "https://b.hatena.ne.jp/hotentry/social.rss"
     secrets: inherit

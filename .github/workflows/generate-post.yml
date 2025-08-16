@@ -49,3 +49,6 @@ jobs:
           else
             echo "No changes to commit."
           fi
+  gh-pages:
+    needs: generate_and_push
+    uses: ./.github/workflows/gh-pages.yml
