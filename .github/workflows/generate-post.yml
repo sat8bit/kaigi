@@ -31,11 +31,11 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
-          go-version: '1.22'
+          go-version-file: "go.mod"
 
       - name: Generate new post
         env:
-          PROJECT_ID: ${{ secrets.GOOGLE_CLOUD_PROJECT_ID }}
+          GOOGLE_CLOUD_PROJECT_ID: ${{ secrets.GOOGLE_CLOUD_PROJECT_ID }}
           LOCATION: 'us-central1'
         run: go run . -rss-url "${{ inputs.rss-url }}"
 
@@ -50,6 +50,3 @@ jobs:
           else
             echo "No changes to commit."
           fi
-  gh-pages:
-    needs: generate_and_push
-    uses: ./.github/workflows/gh-pages.yml

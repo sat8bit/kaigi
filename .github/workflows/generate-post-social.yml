@@ -11,7 +11,7 @@ permissions:
   pages: write
 
 jobs:
-  hatena_hotentry:
+  hatena_hotentry_social:
     uses: ./.github/workflows/generate-post.yml
     with:
       rss-url: "https://b.hatena.ne.jp/hotentry/social.rss"
