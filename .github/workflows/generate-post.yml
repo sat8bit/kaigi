@@ -20,6 +20,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.PAT_PUSH }}
 
       - name: Authenticate to Google Cloud
         id: auth
