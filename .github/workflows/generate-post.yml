@@ -31,7 +31,7 @@ jobs:
 
       - name: Generate new post
         env:
-          PROJECT_ID: ${{ secrets.GOOGLE_CLOUD_PROJECT_ID }}
+          GOOGLE_CLOUD_PROJECT_ID: ${{ secrets.GOOGLE_CLOUD_PROJECT_ID }}
           LOCATION: 'us-central1'
         run: go run . -rss-url "https://b.hatena.ne.jp/hotentry/social.rss"
 
