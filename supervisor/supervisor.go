@@ -13,7 +13,6 @@ func NewSupervisor(maxTurns int, bus bus.Bus, cancel context.CancelFunc) *Superv
 		maxTurns: maxTurns,
 		bus:      bus,      // ★ 追加
 		cancel:   cancel,
-		turnCh:   make(chan int),
 	}
 }
 
@@ -22,7 +21,6 @@ type Supervisor struct {
 	currentTurn int
 	bus         bus.Bus // ★ 追加
 	cancel      context.CancelFunc
-	turnCh      chan int
 }
 
 func (s *Supervisor) Start() {
@@ -31,19 +29,17 @@ func (s *Supervisor) Start() {
 	go func() {
 		for msg := range messageCh {
 			switch msg.Kind {
-			case message.KindTurnChanged:
+			case message.KindError: // ★ 追加
+				slog.Error("Error message received, shutting down.", "from", msg.From.DisplayName, "error", msg.Text)
+				s.cancel()
+				return
+			default:
 				s.currentTurn++
-				slog.Info("Turn changed", "turn", s.currentTurn)
 				if s.currentTurn >= s.maxTurns {
 					slog.Info("Max turns reached, shutting down.")
 					s.cancel()
 					return
 				}
-				s.turnCh <- s.currentTurn
-			case message.KindError: // ★ 追加
-				slog.Error("Error message received, shutting down.", "from", msg.From.DisplayName, "error", msg.Text)
-				s.cancel()
-				return
 			}
 		}
 	}()
