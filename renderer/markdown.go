@@ -18,7 +18,6 @@ import (
 	"github.com/sat8bit/kaigi/topic"
 )
 
-// ★ 修正: フロントマターの形式を `+++` に変更
 const markdownTemplate = `+++
 title = {{ .Title }}
 date = {{ .Date }}
@@ -29,15 +28,88 @@ tags = {{ .Tags }}
 `
 
 func NewMarkdownRenderer(outputDir string, topics []*topic.Topic) *MarkdownRenderer {
+	jst, err := time.LoadLocation("Asia/Tokyo")
+	if err != nil {
+		panic(fmt.Errorf("failed to load JST location: %w", err))
+	}
+	nowInJST := time.Now().In(jst)
+	slug := nowInJST.Format("20060102-150405")
+	filePath := filepath.Join(outputDir, slug+".md")
+
 	return &MarkdownRenderer{
 		outputDir: outputDir,
 		topics:    topics,
+		filePath:  filePath,
 	}
 }
 
 type MarkdownRenderer struct {
 	outputDir string
 	topics    []*topic.Topic
+	filePath  string
+}
+
+// ★★★ メソッド名を Finalize に変更 ★★★
+func (r *MarkdownRenderer) Finalize(allPersonas []*persona.Persona) error {
+	if r.filePath == "" {
+		slog.Info("Markdown file path not set, skipping epilogue.")
+		return nil
+	}
+
+	var epilogue strings.Builder
+	epilogue.WriteString("\n---\n\n## 最終的なキャラクターの関係性\n\n")
+
+	personaIdToName := make(map[string]string)
+	for _, p := range allPersonas {
+		personaIdToName[p.PersonaId] = p.DisplayName
+	}
+
+	sort.Slice(allPersonas, func(i, j int) bool {
+		return allPersonas[i].DisplayName < allPersonas[j].DisplayName
+	})
+
+	for _, p := range allPersonas {
+		epilogue.WriteString(fmt.Sprintf("### %s の視点\n", p.DisplayName))
+
+		if len(p.Relationships) == 0 {
+			epilogue.WriteString("- (誰とも関係を築かなかった)\n")
+		} else {
+			targetIds := make([]string, 0, len(p.Relationships))
+			for id := range p.Relationships {
+				targetIds = append(targetIds, id)
+			}
+			sort.Slice(targetIds, func(i, j int) bool {
+				return personaIdToName[targetIds[i]] < personaIdToName[targetIds[j]]
+			})
+
+			for _, targetId := range targetIds {
+				rel := p.Relationships[targetId]
+				targetName, ok := personaIdToName[targetId]
+				if !ok {
+					continue
+				}
+				epilogue.WriteString(fmt.Sprintf("- **%sに対して:** 親密度 `%d` (印象: %s)\n", targetName, rel.Affinity, rel.Impression))
+			}
+		}
+		epilogue.WriteString("\n")
+	}
+
+	f, err := os.OpenFile(r.filePath, os.O_APPEND|os.O_WRONLY, 0644)
+	if err != nil {
+		if os.IsNotExist(err) {
+			slog.Warn("Markdown file does not exist, cannot append epilogue.", "path", r.filePath)
+			return nil
+		}
+		return fmt.Errorf("failed to open markdown file for appending: %w", err)
+	}
+	defer f.Close()
+
+	if _, err := f.WriteString(epilogue.String()); err != nil {
+		return fmt.Errorf("failed to append epilogue to markdown file: %w", err)
+	}
+
+	slog.Info("Epilogue appended to markdown file", "path", r.filePath)
+	return nil
 }
 
 func (r *MarkdownRenderer) Render(bus bus.Bus, wg *sync.WaitGroup) error {
@@ -77,14 +149,11 @@ func (r *MarkdownRenderer) render(inbox []*message.Message) error {
 	}
 	nowInJST := time.Now().In(jst)
 
-	slug := nowInJST.Format("20060102-150405")
-
 	title := "Kaigi Log"
 	if len(r.topics) > 0 {
 		title = r.topics[0].Title
 	}
 
-	// --- 1. 必要な情報を収集 ---
 	participantsMap := make(map[string]*persona.Persona)
 	var conversationLog strings.Builder
 	var systemAnnounce string
@@ -100,7 +169,6 @@ func (r *MarkdownRenderer) render(inbox []*message.Message) error {
 		}
 	}
 
-	// --- 2. 本文全体を構築 ---
 	var body strings.Builder
 
 	if systemAnnounce != "" {
@@ -108,7 +176,6 @@ func (r *MarkdownRenderer) render(inbox []*message.Message) error {
 		body.WriteString("\n---\n\n")
 	}
 
-	// 登場人物セクション
 	participantsList := make([]*persona.Persona, 0, len(participantsMap))
 	for _, p := range participantsMap {
 		participantsList = append(participantsList, p)
@@ -123,11 +190,9 @@ func (r *MarkdownRenderer) render(inbox []*message.Message) error {
 	}
 	body.WriteString("\n---\n\n")
 
-	// 今日の雑談セクション
 	body.WriteString("## 今日の雑談\n\n")
 	body.WriteString(conversationLog.String())
 
-	// 今日の話題セクション (本文の最後)
 	if len(r.topics) > 0 {
 		body.WriteString("---\n\n")
 		body.WriteString("## 今日の話題\n\n")
@@ -137,28 +202,24 @@ func (r *MarkdownRenderer) render(inbox []*message.Message) error {
 		body.WriteString("\n")
 	}
 
-	// --- 3. フロントマター用のタグを生成 ---
 	var tags []string
 	for _, p := range participantsList {
-		tags = append(tags, fmt.Sprintf(`"%s"`, p.DisplayName)) // ダブルクォートで囲む
+		tags = append(tags, fmt.Sprintf(`"%s"`, p.DisplayName))
 	}
 
-	// --- 4. テンプレートに埋め込み ---
 	tmpl, err := template.New("markdown").Parse(markdownTemplate)
 	if err != nil {
 		return fmt.Errorf("failed to parse markdown template: %w", err)
 	}
 
 	data := struct {
-		Slug  string
 		Date  string
 		Title string
 		Tags  string
 		Body  string
 	}{
-		Slug:  slug,
 		Date:  fmt.Sprintf(`"%s"`, nowInJST.Format("2006-01-02T15:04:05-07:00")),
-		Title: fmt.Sprintf(`"%s"`, title), // ダブルクォートで囲む
+		Title: fmt.Sprintf(`"%s"`, title),
 		Tags:  fmt.Sprintf("[%s]", strings.Join(tags, ", ")),
 		Body:  body.String(),
 	}
@@ -172,11 +233,10 @@ func (r *MarkdownRenderer) render(inbox []*message.Message) error {
 		return fmt.Errorf("failed to create output directory: %w", err)
 	}
 
-	filePath := filepath.Join(r.outputDir, slug+".md")
-	if err := os.WriteFile(filePath, buf.Bytes(), 0644); err != nil {
+	if err := os.WriteFile(r.filePath, buf.Bytes(), 0644); err != nil {
 		return fmt.Errorf("failed to write markdown file: %w", err)
 	}
 
-	slog.Info("Markdown file generated", "path", filePath)
+	slog.Info("Markdown file generated", "path", r.filePath)
 	return nil
 }

@@ -26,11 +26,10 @@ func NewCha(
 	turnProvider turn.TurnProvider,
 	topics []*topic.Topic,
 ) *Cha {
-	// 初期lastTalkにランダムな遅延を追加して、起動直後の発話タイミングをずらす
 	initialLastTalk := time.Now().Add(
 		-time.Duration(persona.MinGapSeconds) * time.Second,
 	).Add(
-		-time.Duration(rand.Intn(5000)) * time.Millisecond, // 0〜5秒のランダムな遅延
+		-time.Duration(rand.Intn(5000)) * time.Millisecond,
 	)
 
 	return &Cha{
@@ -99,6 +98,40 @@ func (c *Cha) Start() {
 	}()
 }
 
+func (c *Cha) updateRelationship(msg *message.Message, inboxContext []*message.Message) {
+	if msg.From == nil || msg.From.PersonaId == "" || msg.From.PersonaId == c.Persona.PersonaId || msg.Kind != message.KindCha {
+		return
+	}
+
+	c.mu.Lock()
+	currentRel, ok := c.Persona.Relationships[msg.From.PersonaId]
+	if !ok {
+		currentRel = &persona.Relationship{
+			TargetPersonaId: msg.From.PersonaId,
+			Affinity:        0,
+			Impression:      "まだ特に印象はない。",
+		}
+	}
+	c.mu.Unlock()
+
+	updatedRel, err := c.llm.UpdateRelationship(c.Context, &llm.UpdateRelationshipInput{
+		Persona:             c.Persona,
+		TargetPersona:       msg.From,
+		RecentMessages:      inboxContext,
+		CurrentRelationship: currentRel,
+	})
+	if err != nil {
+		slog.ErrorContext(c.Context, "failed to update relationship", "from", c.Persona.PersonaId, "to", msg.From.PersonaId, "error", err)
+		return
+	}
+
+	c.mu.Lock()
+	c.Persona.Relationships[msg.From.PersonaId] = updatedRel
+	c.mu.Unlock()
+
+	slog.InfoContext(c.Context, "Updated relationship", "me", c.Persona.DisplayName, "target", msg.From.DisplayName, "newAffinity", updatedRel.Affinity, "newImpression", updatedRel.Impression)
+}
+
 func (c *Cha) tryToTalk() {
 	c.mu.Lock()
 	if c.stopped {
@@ -107,38 +140,45 @@ func (c *Cha) tryToTalk() {
 	}
 	c.mu.Unlock()
 
-	// --- 意思決定フェーズ ---
 	c.mu.Lock()
 	if time.Since(c.lastTalk).Seconds() < float64(c.Persona.MinGapSeconds) {
 		c.mu.Unlock()
 		return
 	}
+	lastTalkTime := c.lastTalk
+	inboxForContext := make([]*message.Message, len(c.inbox))
+	copy(inboxForContext, c.inbox)
 	c.mu.Unlock()
 
-	// --- 発話権獲得フェーズ ---
+	for _, msg := range inboxForContext {
+		if msg.At.After(lastTalkTime) {
+			c.updateRelationship(msg, inboxForContext)
+		}
+	}
+
 	if err := c.turnManager.Acquire(c.Context); err != nil {
 		return
 	}
 	defer c.turnManager.Release()
 
-	// --- 発話実行フェーズ ---
 	c.mu.Lock()
-	inboxCopy := make([]*message.Message, len(c.inbox))
-	copy(inboxCopy, c.inbox)
+	inboxForGeneration := make([]*message.Message, len(c.inbox))
+	copy(inboxForGeneration, c.inbox)
 	c.mu.Unlock()
 
+	// ★★★ 関係性情報を GenerateInput に追加 ★★★
 	resp, err := c.llm.Generate(c.Context, llm.GenerateInput{
 		ChaId:          c.ChaId,
 		Persona:        c.Persona,
-		RecentMessages: inboxCopy,
+		RecentMessages: inboxForGeneration,
 		CurrentTurn:    c.turnProvider.GetCurrentTurn(),
 		MaxTurns:       c.turnProvider.GetMaxTurns(),
 		Topics:         c.topics,
+		Relationships:  c.Persona.Relationships,
 	})
 
 	if err != nil {
 		slog.ErrorContext(c.Context, fmt.Sprintf("Cha %s: LLM error: %v", c.ChaId, err))
-		// ★ エラー発生時に、エラーメッセージをブロードキャストする
 		if berr := c.bus.Broadcast(&message.Message{
 			From: c.Persona,
 			Text: fmt.Sprintf("LLM error: %v", err),

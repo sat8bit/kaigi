@@ -39,7 +39,7 @@ jobs:
         env:
           GOOGLE_CLOUD_PROJECT_ID: ${{ secrets.GOOGLE_CLOUD_PROJECT_ID }}
           LOCATION: 'us-central1'
-        run: go run . -rss-url "${{ inputs.rss-url }}"
+        run: go run . -rss-url "${{ inputs.rss-url }}" -renderers markdown
 
       - name: Commit and push if changed
         run: |

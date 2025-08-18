@@ -5,15 +5,13 @@ import (
 	"fmt"
 	"math/rand"
 
+	"github.com/sat8bit/kaigi/configs"
 	"gopkg.in/yaml.v3"
 )
 
-//go:embed personas.yaml
-var embeddedPersonas []byte
-
 func NewPool() (*Pool, error) {
 	var p Pool
-	err := yaml.Unmarshal(embeddedPersonas, &p)
+	err := yaml.Unmarshal(configs.Personas, &p)
 	if err != nil {
 		return nil, fmt.Errorf("failed to unmarshal embedded Personas: %w", err)
 	}
