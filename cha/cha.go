@@ -129,7 +129,9 @@ func (c *Cha) updateRelationship(msg *message.Message, inboxContext []*message.M
 	c.Persona.Relationships[msg.From.PersonaId] = updatedRel
 	c.mu.Unlock()
 
-	slog.InfoContext(c.Context, "Updated relationship", "me", c.Persona.DisplayName, "target", msg.From.DisplayName, "newAffinity", updatedRel.Affinity, "newImpression", updatedRel.Impression)
+	slog.InfoContext(c.Context,
+		fmt.Sprintf("%s => %s (affinity:%d) %s", c.Persona.DisplayName, msg.From.DisplayName, updatedRel.Affinity, updatedRel.Impression),
+	)
 }
 
 func (c *Cha) tryToTalk() {
