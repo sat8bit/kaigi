@@ -1,0 +1,6 @@
+- targetPersonaId: haru
+  affinity: -10
+  impression: 私の意見に反論せず、むしろ同意を求めるような発言をしてくる。議論を避けているように見える。
+- targetPersonaId: aoi
+  affinity: 25
+  impression: 相手の意見に反論しつつも、その根底にある感情や動機を理解しようと努める姿勢が見られる。

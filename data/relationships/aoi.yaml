@@ -1,6 +1,9 @@
 - targetPersonaId: haru
   affinity: 100
-  impression: 相手の意見を肯定的に受け止め、共感を示すことで、会話を円滑に進めようとする協調性がある。
+  impression: 私の意見に共感し、肯定的な反応を示す、素直で感情豊かな人物である。
 - targetPersonaId: sou
   affinity: 75
   impression: 物事の本質を探求する姿勢は一貫しているが、歴史的な事象と現代を結びつけ、そこから普遍的な問いを見出そうとする、より広範で示唆に富む思考を展開するようになった。
+- targetPersonaId: gou
+  affinity: -30
+  impression: 相手の意見を論理的でないと断じ、自身の見解のみを絶対視する姿勢がより強固になった。共感性や他者の視点への配慮が欠如している。
