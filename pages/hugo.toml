@@ -7,6 +7,10 @@ title = 'kAIgi'
 [taxonomies]
 tag = "tags"
 
+[outputs]
+
+taxonomy = ["HTML", "RSS"]
+
 [params.author]
 name = "sat8bit"
 email = ""
