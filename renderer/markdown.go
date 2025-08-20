@@ -43,21 +43,23 @@ func NewMarkdownRenderer(outputDir string, topics []*topic.Topic) *MarkdownRende
 	}
 }
 
+// ★★★ ログ関連のフィールドを削除 ★★★
 type MarkdownRenderer struct {
 	outputDir string
 	topics    []*topic.Topic
 	filePath  string
 }
 
-// ★★★ メソッド名を Finalize に変更 ★★★
+// ★★★ ログ書き出しロジックを削除 ★★★
 func (r *MarkdownRenderer) Finalize(allPersonas []*persona.Persona) error {
 	if r.filePath == "" {
-		slog.Info("Markdown file path not set, skipping epilogue.")
+		slog.Info("Markdown file was not created, skipping epilogue.")
 		return nil
 	}
 
-	var epilogue strings.Builder
-	epilogue.WriteString("\n---\n\n## 最終的なキャラクターの関係性\n\n")
+	var contentToAppend strings.Builder
+
+	contentToAppend.WriteString("\n---\n\n## 関係性\n\n")
 
 	personaIdToName := make(map[string]string)
 	for _, p := range allPersonas {
@@ -69,10 +71,10 @@ func (r *MarkdownRenderer) Finalize(allPersonas []*persona.Persona) error {
 	})
 
 	for _, p := range allPersonas {
-		epilogue.WriteString(fmt.Sprintf("### %s の視点\n", p.DisplayName))
+		contentToAppend.WriteString(fmt.Sprintf("### %s の視点\n", p.DisplayName))
 
 		if len(p.Relationships) == 0 {
-			epilogue.WriteString("- (誰とも関係を築かなかった)\n")
+			contentToAppend.WriteString("- (誰とも関係を築かなかった)\n")
 		} else {
 			targetIds := make([]string, 0, len(p.Relationships))
 			for id := range p.Relationships {
@@ -88,10 +90,10 @@ func (r *MarkdownRenderer) Finalize(allPersonas []*persona.Persona) error {
 				if !ok {
 					continue
 				}
-				epilogue.WriteString(fmt.Sprintf("- **%sに対して:** 親密度 `%d` (印象: %s)\n", targetName, rel.Affinity, rel.Impression))
+				contentToAppend.WriteString(fmt.Sprintf("- **%sに対して:** 親密度 `%d` (印象: %s)\n", targetName, rel.Affinity, rel.Impression))
 			}
 		}
-		epilogue.WriteString("\n")
+		contentToAppend.WriteString("\n")
 	}
 
 	f, err := os.OpenFile(r.filePath, os.O_APPEND|os.O_WRONLY, 0644)
@@ -104,7 +106,7 @@ func (r *MarkdownRenderer) Finalize(allPersonas []*persona.Persona) error {
 	}
 	defer f.Close()
 
-	if _, err := f.WriteString(epilogue.String()); err != nil {
+	if _, err := f.WriteString(contentToAppend.String()); err != nil {
 		return fmt.Errorf("failed to append epilogue to markdown file: %w", err)
 	}
 
@@ -112,29 +114,34 @@ func (r *MarkdownRenderer) Finalize(allPersonas []*persona.Persona) error {
 	return nil
 }
 
+// ★★★ KindChaのみを収集するように変更 ★★★
 func (r *MarkdownRenderer) Render(bus bus.Bus, wg *sync.WaitGroup) error {
 	messageCh := bus.Subscribe()
-	var inbox []*message.Message
+	var allMessages []*message.Message
 
 	wg.Add(1)
 	go func() {
 		defer wg.Done()
 		for msg := range messageCh {
-			inbox = append(inbox, msg)
+			allMessages = append(allMessages, msg)
 		}
 
-		for _, msg := range inbox {
+		var conversationMessages []*message.Message
+		for _, msg := range allMessages {
 			if msg.Kind == message.KindError {
 				slog.Info("Error message detected, skipping markdown generation.")
 				return
 			}
+			if msg.Kind == message.KindCha {
+				conversationMessages = append(conversationMessages, msg)
+			}
 		}
 
-		if len(inbox) < 2 {
+		if len(conversationMessages) == 0 {
 			return
 		}
 
-		if err := r.render(inbox); err != nil {
+		if err := r.render(conversationMessages); err != nil {
 			slog.Error("failed to render markdown", "error", err)
 		}
 	}()
@@ -142,6 +149,7 @@ func (r *MarkdownRenderer) Render(bus bus.Bus, wg *sync.WaitGroup) error {
 	return nil
 }
 
+// ★★★ KindChaのメッセージのみを処理するように簡略化 ★★★
 func (r *MarkdownRenderer) render(inbox []*message.Message) error {
 	jst, err := time.LoadLocation("Asia/Tokyo")
 	if err != nil {
@@ -156,25 +164,15 @@ func (r *MarkdownRenderer) render(inbox []*message.Message) error {
 
 	participantsMap := make(map[string]*persona.Persona)
 	var conversationLog strings.Builder
-	var systemAnnounce string
 
 	for _, msg := range inbox {
-		if msg.Kind == message.KindCha {
-			if _, ok := participantsMap[msg.From.DisplayName]; !ok {
-				participantsMap[msg.From.DisplayName] = msg.From
-			}
-			conversationLog.WriteString(fmt.Sprintf("**%s**: %s\n\n", msg.From.DisplayName, msg.Text))
-		} else if msg.Kind == message.KindSystem {
-			systemAnnounce = fmt.Sprintf("> %s\n", msg.Text)
+		if _, ok := participantsMap[msg.From.DisplayName]; !ok {
+			participantsMap[msg.From.DisplayName] = msg.From
 		}
+		conversationLog.WriteString(fmt.Sprintf("**%s**: %s\n\n", msg.From.DisplayName, msg.Text))
 	}
 
 	var body strings.Builder
-
-	if systemAnnounce != "" {
-		body.WriteString(systemAnnounce)
-		body.WriteString("\n---\n\n")
-	}
 
 	participantsList := make([]*persona.Persona, 0, len(participantsMap))
 	for _, p := range participantsMap {

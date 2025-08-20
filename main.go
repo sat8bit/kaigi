@@ -15,6 +15,7 @@ import (
 	"time"
 
 	buspkg "github.com/sat8bit/kaigi/bus"
+	"github.com/sat8bit/kaigi/buslog"
 	"github.com/sat8bit/kaigi/cha"
 	"github.com/sat8bit/kaigi/fetcher"
 	"github.com/sat8bit/kaigi/llm"
@@ -39,10 +40,17 @@ func main() {
 		rssLimit      = flag.Int("rss-limit", 1, "Maximum number of RSS items to fetch")
 		outputDir     = flag.String("output", "./pages/content/posts", "Directory to save markdown files")
 		dataDir       = flag.String("data", "./data", "Directory for dynamic data like relationships")
-		// ★★★ ファイル保存をスキップするフラグを追加 ★★★
-		noSave = flag.Bool("no-save", false, "If true, relationship data will not be saved to files")
+		noSave        = flag.Bool("no-save", false, "If true, relationship data will not be saved to files")
 	)
 	flag.Parse()
+
+	// --- 主要コンポーネントの初期化 (busが先) ---
+	bus := buspkg.NewMemoryBus()
+
+	// ★★★ ここでslogのデフォルトハンドラをBusHandlerに設定 ★★★
+	busHandler := buslog.NewBusHandler(bus)
+	logger := slog.New(busHandler)
+	slog.SetDefault(logger)
 
 	// --- コンテキストとシグナルハンドリング ---
 	ctx, cancel := context.WithCancel(context.Background())
@@ -70,8 +78,6 @@ func main() {
 		log.Fatalf("failed to build topics: %v", err)
 	}
 
-	// --- 主要コンポーネントの初期化 ---
-	bus := buspkg.NewMemoryBus()
 	turnManager := turn.NewMutexManager()
 	var wg sync.WaitGroup
 
@@ -142,7 +148,6 @@ func main() {
 		}
 	}
 
-	// ★★★ フラグに応じてファイル保存をスキップ ★★★
 	if !*noSave {
 		slog.Info("Saving all persona relationships...")
 		for _, p := range personas {

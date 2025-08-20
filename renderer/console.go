@@ -26,7 +26,9 @@ func (c *ConsoleRenderer) Render(bus bus.Bus, wg *sync.WaitGroup) error {
 			switch o.Kind {
 			case message.KindSystem:
 				fmt.Printf("[System] %s\n", o.Text)
-			default:
+			case message.KindLog:
+				fmt.Printf("[SysLog]%s\n", o.Text)
+			case message.KindCha:
 				fmt.Printf("%s: ", o.From.DisplayName)
 				for _, r := range o.Text {
 					fmt.Print(string(r))
