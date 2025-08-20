@@ -8,8 +8,8 @@ title = 'kAIgi'
 tag = "tags"
 
 [outputs]
-
 taxonomy = ["HTML", "RSS"]
+term     = ["HTML", "RSS"]
 
 [params.author]
 name = "sat8bit"
