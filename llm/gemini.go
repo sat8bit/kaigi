@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"math/rand"
 	"strings"
 
 	"github.com/sat8bit/kaigi/message"
@@ -139,10 +140,10 @@ func buildRelationshipSystemPrompt(input *UpdateRelationshipInput) string {
 	var p strings.Builder
 
 	p.WriteString("You are a psychological analyst. Your task is to analyze a conversation from the perspective of one character and determine how their impression of another character has changed.\n\n")
-	p.WriteString("## Your Point of View (Persona)\n")
+	p.WriteString("## Your Point of View (Listener)\n")
 	p.WriteString(fmt.Sprintf("You must adopt the personality of **%s**.\n", input.Persona.DisplayName))
 	p.WriteString(fmt.Sprintf("Their core personality is: '%s'.\n\n", input.Persona.Tagline))
-	p.WriteString("## Target of Analysis (TargetPersona)\n")
+	p.WriteString("## Target of Analysis (Speaker)\n")
 	p.WriteString(fmt.Sprintf("You are analyzing your feelings towards **%s**.\n\n", input.TargetPersona.DisplayName))
 	p.WriteString("## Current Relationship\n")
 	p.WriteString(fmt.Sprintf("This is your current relationship with %s, *before* the latest message in the conversation.\n", input.TargetPersona.DisplayName))
@@ -198,7 +199,6 @@ func buildSystemPrompt(input GenerateInput) string {
 		p.WriteString(fmt.Sprintf("This is turn %d of a %d turn conversation.\n\n", input.CurrentTurn, input.MaxTurns))
 	}
 
-	// ★★★ 他者との関係性をプロンプトに追加 ★★★
 	if len(input.Relationships) > 0 {
 		personaIdToName := make(map[string]string)
 		for _, msg := range input.RecentMessages {
@@ -214,7 +214,7 @@ func buildSystemPrompt(input GenerateInput) string {
 		for targetId, rel := range input.Relationships {
 			targetName, ok := personaIdToName[targetId]
 			if !ok {
-				continue // DisplayNameが不明な相手への言及はスキップ
+				continue
 			}
 			p.WriteString(fmt.Sprintf("### Towards %s:\n", targetName))
 			p.WriteString(fmt.Sprintf("- Affinity: %d\n", rel.Affinity))
@@ -227,7 +227,14 @@ func buildSystemPrompt(input GenerateInput) string {
 	p.WriteString("1.  **The Golden Rule:** Your reply must be the character's dialogue text ONLY.\n")
 	p.WriteString(fmt.Sprintf("2.  **How to Follow Rule #1:** A common mistake is to start your reply with a prefix like `(%s):`. This is forbidden. Your reply MUST begin *directly* with the first word of your dialogue.\n", input.Persona.DisplayName))
 	p.WriteString("3.  **Language:** Reply in Japanese ONLY.\n")
-	p.WriteString(fmt.Sprintf("4.  **Conciseness:** Keep it concise (around %d Japanese characters).\n", input.Persona.DefaultMaxChars))
+
+	// ★★★ 文字数制限を動的に変更 ★★★
+	baseChars := input.Persona.DefaultMaxChars
+	minChars := int(float64(baseChars) * 0.4)
+	maxChars := int(float64(baseChars) * 1.2)
+	randomChars := rand.Intn(maxChars-minChars+1) + minChars
+	p.WriteString(fmt.Sprintf("4.  **Conciseness & Style:** Your reply should be around %d Japanese characters, but feel free to be much shorter or slightly longer to make the conversation feel natural and dynamic. Avoid making every reply the same length.\n", randomChars))
+
 	p.WriteString("5.  **Single Utterance:** Provide exactly ONE utterance. Do not write a script with multiple lines or other characters' dialogue.\n")
 
 	return p.String()

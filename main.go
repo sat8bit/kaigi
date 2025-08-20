@@ -34,7 +34,7 @@ func main() {
 		maxTurns      = flag.Int("turns", 20, "Maximum number of turns before shutdown")
 		personaIDsStr = flag.String("chas", "", "Comma-separated list of persona IDs to participate (e.g., aoi,haru,gou)")
 		numChas       = flag.Int("num-chas", 3, "Number of random Chas to participate (used if -chas is not provided)")
-		renderersStr  = flag.String("renderers", "console,markdown", "Comma-separated list of renderers to use (console, markdown)")
+		renderersStr  = flag.String("renderers", "console", "Comma-separated list of renderers to use (console, markdown)")
 		rssURL        = flag.String("rss-url", "", "URL of the RSS feed to use as a topic")
 		rssLimit      = flag.Int("rss-limit", 1, "Maximum number of RSS items to fetch")
 		outputDir     = flag.String("output", "./pages/content/posts", "Directory to save markdown files")
