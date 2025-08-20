@@ -39,6 +39,8 @@ func main() {
 		rssLimit      = flag.Int("rss-limit", 1, "Maximum number of RSS items to fetch")
 		outputDir     = flag.String("output", "./pages/content/posts", "Directory to save markdown files")
 		dataDir       = flag.String("data", "./data", "Directory for dynamic data like relationships")
+		// ★★★ ファイル保存をスキップするフラグを追加 ★★★
+		noSave = flag.Bool("no-save", false, "If true, relationship data will not be saved to files")
 	)
 	flag.Parse()
 
@@ -140,11 +142,16 @@ func main() {
 		}
 	}
 
-	slog.Info("Saving all persona relationships...")
-	for _, p := range personas {
-		if err := relationshipStore.SaveForPersona(p); err != nil {
-			slog.Error("failed to save relationship for persona", "personaId", p.PersonaId, "error", err)
+	// ★★★ フラグに応じてファイル保存をスキップ ★★★
+	if !*noSave {
+		slog.Info("Saving all persona relationships...")
+		for _, p := range personas {
+			if err := relationshipStore.SaveForPersona(p); err != nil {
+				slog.Error("failed to save relationship for persona", "personaId", p.PersonaId, "error", err)
+			}
 		}
+	} else {
+		slog.Info("Skipping relationship saving because -no-save flag is set.")
 	}
 
 	slog.Info("All components shut down gracefully.")
@@ -184,7 +191,6 @@ func buildPersonas(pool *persona.Pool, personaIDsStr string, numChas int) ([]*pe
 	return pool.GetRandomN(numChas)
 }
 
-// ★★★ Renderの呼び出しを削除し、責務を明確化 ★★★
 func buildRenderers(renderersStr, outputDir string, topics []*topic.Topic) []renderer.Renderer {
 	var activeRenderers []renderer.Renderer
 
