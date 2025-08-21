@@ -1,9 +1,9 @@
-- targetPersonaId: sou
-  affinity: 50
-  impression: 物事を多角的に捉え、相手の意見を尊重しながらも、自身の考えを論理的に深めていく姿勢がある。
-- targetPersonaId: aoi
-  affinity: 115
-  impression: 相手の意見を尊重しつつ、自身の考えを論理的に、かつ情熱的に伝えようとする姿勢が垣間見える。感情的な側面を、物事を前進させる力と捉える、温かくも思慮深い視点を持っている。
 - targetPersonaId: gou
   affinity: -80
   impression: 相手の意見を頭ごなしに否定し、自分の考えを押し付ける。相手の意見の根拠や背景を理解しようとせず、表面的な言葉尻を捉えて批判する。建設的な議論ではなく、相手を論破することに重きを置いているように見える。
+- targetPersonaId: sou
+  affinity: 70
+  impression: 物事の本質を追求する中で、相手の感情にも配慮しつつ、さらに深い対話を促そうとする姿勢が見られる。
+- targetPersonaId: aoi
+  affinity: 125
+  impression: 物事を多角的に捉え、常に深い洞察を求める姿勢は、議論をより豊かにしてくれる。
