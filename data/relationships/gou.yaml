@@ -1,6 +1,9 @@
+- targetPersonaId: sou
+  affinity: -10
+  impression: 自分の意見を明確に持たず、相手の言葉尻を捉えて揚げ足を取ることに終始しているように見える。
 - targetPersonaId: haru
   affinity: -10
   impression: 楽観的で、対立を恐れず、建設的な議論を通じて物事を前進させようとする姿勢が見られる。
 - targetPersonaId: aoi
-  affinity: 60
-  impression: 相手の意見を分析し、その背後にある意図や可能性を論理的に探求しようとする姿勢が見られる。
+  affinity: 70
+  impression: 相手の意見に反論しつつも、自身の考えを整理し、相手に理解させようと努める論理的な思考の持ち主である。
