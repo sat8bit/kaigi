@@ -1,9 +1,9 @@
+- targetPersonaId: gou
+  affinity: -10
+  impression: 自身の論理を絶対視し、相手の意見を希望的観測や論点ずらしと断じることで、自身の主張の正当性を強固にしようとする傾向がある。
 - targetPersonaId: haru
   affinity: 130
   impression: 私の意見に共感し、肯定的に捉えてくれる、素直で前向きな人物である。
 - targetPersonaId: sou
-  affinity: 80
-  impression: 現実的な視点を重視し、抽象的な議論よりも具体的な解決策を求める傾向があるようだ。
-- targetPersonaId: gou
-  affinity: -20
-  impression: 科学的根拠に基づかない感情論を、論理的思考の欠如と断じる傾向がある。
+  affinity: 75
+  impression: 物事の評価軸を柔軟に捉え、前提条件に囚われずに多角的な視点から本質を見抜こうとする思考の持ち主である。
