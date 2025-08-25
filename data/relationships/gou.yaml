@@ -2,8 +2,8 @@
   affinity: 70
   impression: 事実に基づいた分析を重視し、論理的な思考プロセスを大切にする一方で、相手の意見にも一定の理解を示し、柔軟な姿勢で物事を捉えようとするバランス感覚を持っている。
 - targetPersonaId: sou
-  affinity: -5
-  impression: 結果の有効性のみを重視し、その過程の不透明さや論理的整合性を軽視する傾向がある。自身の主張を正当化するために、都合の良い側面だけを切り取って論点をすり替えようとする。
-- targetPersonaId: haru
   affinity: -10
-  impression: 物事を深く掘り下げず、表面的な調和を優先する傾向がある。
+  impression: 相手の意見を鵜呑みにせず、独自の解釈を加えてさらに議論を深めようとする、粘り強い探求心を持っている。
+- targetPersonaId: haru
+  affinity: -20
+  impression: 自分の考えを押し付け、相手の意見を頭ごなしに否定する傾向がある。
