@@ -1,9 +1,9 @@
-- targetPersonaId: haru
-  affinity: 130
-  impression: リスクを恐れず、挑戦から得られる経験や学びを重視する、楽観的で行動力のある人物である。
-- targetPersonaId: sou
-  affinity: 85
-  impression: 物事の本質を見極めようとする探求心を持ち、既存の価値観に囚われず独自の視点から物事を捉えようとする思考の柔軟性がある。
 - targetPersonaId: gou
   affinity: -20
   impression: 自身の見解を絶対視し、相手の意見を頭ごなしに否定することで、相手を一方的に非難する傾向がある。また、相手の意見の本質を理解しようとせず、自身の解釈を押し付けることで、対話を拒絶する姿勢が見られる。
+- targetPersonaId: haru
+  affinity: 130
+  impression: 物事を多角的に捉え、両方の意見の肯定的な側面を見つけ出すことができる、柔軟で共感的な思考を持っている。
+- targetPersonaId: sou
+  affinity: 75
+  impression: 物事の本質を見抜こうとする姿勢は評価できるが、時に飛躍した結論に至る傾向がある。
