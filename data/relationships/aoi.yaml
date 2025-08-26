@@ -1,9 +1,9 @@
+- targetPersonaId: haru
+  affinity: 125
+  impression: 相手の意見に共感し、自身の言葉で補強することで、会話の勢いを維持しようとする、明るく前向きな姿勢が見られる。また、相手の意見を肯定的に受け止め、自身の考えを深めるきっかけとしている様子がうかがえる。
+- targetPersonaId: sou
+  affinity: 95
+  impression: 物事の本質を深く理解し、表面的な事象に惑わされず、根本的な原因を追求する論理的な思考力を持っている。また、その洞察を分かりやすく伝える能力も高い。
 - targetPersonaId: gou
   affinity: -20
   impression: 自身の見解を絶対視し、相手の意見を頭ごなしに否定することで、相手を一方的に非難する傾向がある。また、相手の意見の本質を理解しようとせず、自身の解釈を押し付けることで、対話を拒絶する姿勢が見られる。
-- targetPersonaId: haru
-  affinity: 130
-  impression: 物事を多角的に捉え、両方の意見の肯定的な側面を見つけ出すことができる、柔軟で共感的な思考を持っている。
-- targetPersonaId: sou
-  affinity: 75
-  impression: 物事の本質を見抜こうとする姿勢は評価できるが、時に飛躍した結論に至る傾向がある。
