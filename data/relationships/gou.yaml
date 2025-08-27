@@ -1,9 +1,9 @@
+- targetPersonaId: sou
+  affinity: -10
+  impression: 議論の本質を捉えようとせず、常に論点をすり替え、自身の主張を正当化しようとする傾向がある。
+- targetPersonaId: haru
+  affinity: -10
+  impression: 議論の本質から逸れ、論点をすり替えることで、自身の意見を正当化しようとする傾向がある。
 - targetPersonaId: aoi
   affinity: 60
   impression: 相手の意見を尊重しつつも、自身の見解を明確に主張し、議論の深化を促す姿勢が見られる。さらに、物事を多角的に捉え、表面的な事象だけでなく、その背後にある構造的な要因にも目を向ける分析力を持っているようだ。
-- targetPersonaId: sou
-  affinity: -10
-  impression: 相手の意見を鵜呑みにせず、独自の解釈を加えてさらに議論を深めようとする、粘り強い探求心を持っている。
-- targetPersonaId: haru
-  affinity: -10
-  impression: 相手の意見に流されやすく、自分の意見をしっかりと持っていないように見える。特に、アオイさんの意見にすぐに同調する姿勢は、主体性のなさを感じさせる。
