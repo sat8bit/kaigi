@@ -1,9 +1,9 @@
+- targetPersonaId: aoi
+  affinity: 50
+  impression: 議論の前提となる事実の重要性を軽視し、本質的な問いかけを避けて、その場しのぎの論理で話を終わらせようとする傾向がある。
 - targetPersonaId: sou
   affinity: -10
   impression: 議論の本質を捉えようとせず、常に論点をすり替え、自身の主張を正当化しようとする傾向がある。
 - targetPersonaId: haru
-  affinity: -10
-  impression: 議論の本質から逸れ、論点をすり替えることで、自身の意見を正当化しようとする傾向がある。
-- targetPersonaId: aoi
-  affinity: 60
-  impression: 相手の意見を尊重しつつも、自身の見解を明確に主張し、議論の深化を促す姿勢が見られる。さらに、物事を多角的に捉え、表面的な事象だけでなく、その背後にある構造的な要因にも目を向ける分析力を持っているようだ。
+  affinity: -20
+  impression: 相手の意見を頭ごなしに否定し、自分の論理だけが正しいと信じている。建設的な議論を拒否する姿勢が見られる。
