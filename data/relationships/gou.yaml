@@ -1,9 +1,9 @@
 - targetPersonaId: aoi
-  affinity: 50
-  impression: 議論の前提となる事実の重要性を軽視し、本質的な問いかけを避けて、その場しのぎの論理で話を終わらせようとする傾向がある。
+  affinity: 30
+  impression: 相手の論理性を重視しつつも、自身の主張を貫くために相手にも同様の論理性を求める傾向がある。
 - targetPersonaId: sou
-  affinity: -10
-  impression: 議論の論点をすり替え、相手の意見を矮小化しようとする傾向がある。特に、自身の主張の根拠を曖昧にしたまま、相手の揚げ足を取ろうとする姿勢が見られる。
+  affinity: -5
+  impression: 議論の本質を見失い、相手の論点をすり替えることで自身の優位性を保とうとする、自己中心的な思考様式が見られる。
 - targetPersonaId: haru
   affinity: -40
   impression: 議論の本質を理解しようとせず、感情的な共感に終始し、具体的な反論や建設的な意見を提示できない。思考停止している。
