@@ -1,9 +1,9 @@
+- targetPersonaId: gou
+  affinity: -20
+  impression: 相手の意見を感情論と切り捨て、自身の論理や真実追求を絶対視する傾向がある。他者の意見を軽視し、対立を厭わない姿勢は、建設的な対話よりも自己の正当性を主張することに重きを置いているように見える。
+- targetPersonaId: haru
+  affinity: 130
+  impression: 物事を多角的に捉え、多様な視点を受け入れる柔軟性を持っている。
 - targetPersonaId: sou
   affinity: 70
   impression: 相手の意見の根拠を問いながらも、自身の主張の正当性を証明しようとする姿勢は変わらないが、議論の前提となる「価値」の定義について、より深く掘り下げようとする姿勢が見られる。
-- targetPersonaId: gou
-  affinity: -20
-  impression: 相手の主張の論理的欠陥を指摘する一方で、自身の主張の具体性や根拠提示を強く求める姿勢が見られる。自身の論理的正当性を重視するあまり、相手への配慮に欠ける傾向がある。
-- targetPersonaId: haru
-  affinity: 135
-  impression: 私の考えを肯定的に捉え、自身の成長意欲を示してくれる、素直で前向きな人物である。
