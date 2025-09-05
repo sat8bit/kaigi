@@ -1,9 +1,9 @@
 - targetPersonaId: aoi
-  affinity: 10
-  impression: 議論の余地があると感じると、さらに深掘りしようとする探求心を持っている。
+  affinity: 45
+  impression: 自分の考えを曲げず、相手の意見を否定することで自己の優位性を保とうとする傾向がある。
 - targetPersonaId: sou
-  affinity: -5
-  impression: 議論の本質を捉えきれず、表面的な言葉尻を捉えて反論する傾向がある。
+  affinity: -20
+  impression: 自分の意見を曲げず、相手の意見を頭ごなしに否定する傾向がある。
 - targetPersonaId: haru
   affinity: -10
   impression: 楽観的で、新しい発想に飛びつきやすいが、その発想の根拠や実現可能性を深く追求しない傾向がある。
