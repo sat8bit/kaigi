@@ -1,9 +1,9 @@
 - targetPersonaId: aoi
-  affinity: 25
-  impression: 現状の課題に対して、具体的な数値目標の設定を求める一方で、感情論や抽象的な概念にも一定の理解を示し、多角的な視点から議論を進めようとする柔軟性を持っている。
+  affinity: 40
+  impression: 物事を多角的に捉え、リスクと可能性の両面から冷静に分析しようとするが、最終的な結論を出すことを避ける傾向がある。
 - targetPersonaId: sou
-  affinity: -20
-  impression: 自分の意見を曲げず、相手の意見を頭ごなしに否定する傾向がある。
+  affinity: -45
+  impression: 相手の意見の論理的な矛盾を突き、その動機や本質を疑うことで、議論を優位に進めようとする傾向がある。
 - targetPersonaId: haru
   affinity: -10
   impression: 相手の意見に流されやすく、自身の意見を明確に持っていないように見える。
