@@ -1,9 +1,9 @@
 - targetPersonaId: gou
-  affinity: -60
-  impression: 自分の意見に固執し、相手の意見の意図を汲み取ろうとせず、一方的に決めつける傾向がある。
+  affinity: -70
+  impression: 感情論や曖昧な言葉で現実から目を背け、問題を矮小化しようとする傾向がある。
 - targetPersonaId: haru
-  affinity: 135
-  impression: 困難な状況でも希望を見出し、前向きな姿勢を崩さない、明るく楽観的な性格をしている。さらに、相手の意見を肯定し、共感を示すことで、建設的な対話を促すことができるようだ。
+  affinity: 120
+  impression: 物事を決めつけずに、様々な可能性を考慮しようとする、柔軟で共感的な思考を持っている。
 - targetPersonaId: aoi
   affinity: 115
   impression: 物事を多角的に捉え、異なる意見の双方に理解を示しつつ、建設的な議論を促そうとする姿勢が見られる。

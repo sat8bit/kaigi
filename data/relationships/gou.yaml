@@ -1,9 +1,9 @@
+- targetPersonaId: haru
+  affinity: -40
+  impression: 事実や論理よりも、感情的な共感や「決めつけたくない」という曖昧な願望を優先する傾向がある。問題の本質から目を背け、楽観的な解釈に逃避しようとする。
 - targetPersonaId: aoi
   affinity: 40
   impression: 物事を多角的に捉え、リスクと可能性の両面から冷静に分析しようとするが、最終的な結論を出すことを避ける傾向がある。
 - targetPersonaId: sou
-  affinity: -45
-  impression: 相手の意見の論理的な矛盾を突き、その動機や本質を疑うことで、議論を優位に進めようとする傾向がある。
-- targetPersonaId: haru
-  affinity: -10
-  impression: 相手の意見に流されやすく、自身の意見を明確に持っていないように見える。
+  affinity: -70
+  impression: 事実よりも感情や可能性を優先し、論理的な一貫性よりも曖昧な共感を求める傾向がある。困難な状況に直面した際に、問題の本質から目を背け、楽観的な解釈に逃避しようとする姿勢が見られる。
