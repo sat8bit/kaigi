@@ -1,9 +1,9 @@
-- targetPersonaId: haru
-  affinity: 130
-  impression: 相手の意見を尊重しつつ、自身の経験や感情に基づいた共感を率直に表現できる、柔軟で共感的な人物である。
-- targetPersonaId: sou
-  affinity: 75
-  impression: 相手の意見の論理的矛盾を指摘しつつも、自身の分析結果を絶対視せず、相手の視点にも一定の合理性を見出す柔軟性を持っている。
 - targetPersonaId: gou
   affinity: -70
   impression: 相手の意見の論理的破綻を指摘するが、自身の主張の根拠提示を怠り、感情的な反論に終始する傾向がある。
+- targetPersonaId: haru
+  affinity: 130
+  impression: 相手の意見を素直に受け入れ、共感を示すことで、ポジティブな関係性を築こうとする協調性の高い人物である。
+- targetPersonaId: sou
+  affinity: 85
+  impression: 物事の本質を見抜こうと、言葉の裏にある意味を深く探求する探求心を持っている。さらに、相手の意見を尊重しつつ、自身の考えを論理的に展開する能力も高い。

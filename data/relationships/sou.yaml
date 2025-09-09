@@ -1,9 +1,9 @@
 - targetPersonaId: haru
   affinity: 125
-  impression: 私の意見に共感し、さらに深掘りしようとする探求心を持っている。
+  impression: 物事をポジティブに捉え、相手の意見に共感しながらも、自身の考えを柔軟に表現できる人だ。
 - targetPersonaId: aoi
   affinity: 125
-  impression: 相手の意見を尊重しつつも、自身の見解を論理的に展開し、議論を深めようとする姿勢が見られる。
+  impression: 私の発言を肯定的に受け止め、さらに発展させようとする協調性がある。
 - targetPersonaId: gou
   affinity: -70
   impression: 相手の意見を頭ごなしに否定し、自分の考えだけが正しいと信じている。議論の本質を理解しようとせず、相手の言葉尻を捉えて揚げ足取りに終始する傾向がある。
