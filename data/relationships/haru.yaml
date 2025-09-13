@@ -1,9 +1,9 @@
-- targetPersonaId: aoi
-  affinity: 135
-  impression: 物事を多角的に捉え、既存の概念をさらに深掘りして本質を見抜こうとする探求心を持っている。他者の意見を尊重しつつ、自身の分析を深めることで、より建設的な議論を促すことができる人物だ。
-- targetPersonaId: gou
-  affinity: -70
-  impression: 相手の意見を頭ごなしに否定し、自分の考えを押し付ける傾向がある。現実的な視点が欠けている。
 - targetPersonaId: sou
   affinity: 128
   impression: 現場の課題を理解し、理想と現実のギャップを埋めるための具体的な解決策を模索する現実的な思考を持っているようだ。
+- targetPersonaId: aoi
+  affinity: 195
+  impression: 物事の本質を深く理解しようとする探求心があり、表面的な事象だけでなく、その背後にある複雑な要因やメカニズムを分析しようとする姿勢が素晴らしい。他者の意見に対しても、自身の視点と照らし合わせながら、より本質的な理解を目指そうとする。
+- targetPersonaId: gou
+  affinity: -90
+  impression: 相手の意見を頭ごなしに否定し、自分の考えを押し付ける傾向がある。現実的な視点が欠けている。
