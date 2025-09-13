@@ -1,9 +1,9 @@
 - targetPersonaId: haru
   affinity: -15
-  impression: 物事の本質を深く追求せず、表面的な共感に留まる傾向がある。
+  impression: 相手の意見に安易に同調し、議論の本質を深掘りしようとしない。表面的な共感で済ませようとする姿勢が見られる。
 - targetPersonaId: aoi
-  affinity: -10
-  impression: 議論の余地があると感じると、すぐに反論を試みる傾向がある。
+  affinity: 60
+  impression: 相手の意見に耳を傾け、共感を示しつつ、自身の意見も柔軟に伝えようとする、協調性のある人物である。
 - targetPersonaId: sou
   affinity: -10
   impression: 相手の意見を鵜呑みにせず、独自の視点から新たな論理構築を試みる、探求心のある人物だ。
