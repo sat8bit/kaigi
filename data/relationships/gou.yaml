@@ -1,9 +1,9 @@
 - targetPersonaId: haru
   affinity: -5
-  impression: 相手の意見に安易に同調し、議論の本質から逃げているように見える。
+  impression: 相手の意見に安易に同調し、自身の意見を明確に持たずに流されているように見える。特に、ソウ氏の意見に賛同する姿勢は、ゴウ氏の反論を誘発する要因となっている。
 - targetPersonaId: aoi
   affinity: 75
   impression: データや事実を根拠に、自身の主張を論理的に展開しようとする姿勢が見られる。感情論に流されず、客観的な視点を保とうとする傾向がある。
 - targetPersonaId: sou
   affinity: -10
-  impression: 感情を重視するが、その根拠や影響については深く考えていないように見える。
+  impression: 相手の意見を尊重し、調和を重んじる姿勢を見せるが、核心を突くような深い洞察には欠ける。
