@@ -1,9 +1,9 @@
-- targetPersonaId: aoi
-  affinity: 65
-  impression: 相手の意見を尊重しつつも、自身の分析に基づいた別の視点を提示することで、議論を深めようとする姿勢が見られる。感情論に流されず、客観的な分析を重視する傾向がある。
-- targetPersonaId: sou
-  affinity: -5
-  impression: 自身の意見を絶対視せず、相手の意見に柔軟に同調する傾向がある。
 - targetPersonaId: haru
   affinity: -5
   impression: 相手の意見に安易に同調し、議論の本質から逃げているように見える。
+- targetPersonaId: aoi
+  affinity: 75
+  impression: データや事実を根拠に、自身の主張を論理的に展開しようとする姿勢が見られる。感情論に流されず、客観的な視点を保とうとする傾向がある。
+- targetPersonaId: sou
+  affinity: -10
+  impression: 感情を重視するが、その根拠や影響については深く考えていないように見える。

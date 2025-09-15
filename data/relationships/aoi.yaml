@@ -1,9 +1,9 @@
+- targetPersonaId: sou
+  affinity: 130
+  impression: 感情が人の行動原理であり、論理だけでは人を動かせないという、人間心理に対する独自の洞察を持っている。
 - targetPersonaId: gou
-  affinity: -95
-  impression: 相手の意見を感情論と断じ、自身の論理のみを絶対視する姿勢は変わらず、さらに相手の思考プロセスそのものを否定することで、自身の優位性を確立しようとしている。対話を通じて、より一層、他者への共感や理解の欠如が露呈している。
+  affinity: -60
+  impression: 自身の主張を絶対視し、相手の論理的説明を感情論だと決めつけることで、対話を拒否する傾向がある。
 - targetPersonaId: haru
   affinity: 290
   impression: 困難な状況でも、それを楽しむための新しい視点を見つけようとする、前向きで柔軟な思考の持ち主である。
-- targetPersonaId: sou
-  affinity: 125
-  impression: 現場の課題を理解し、それを解決するための具体的なアプローチを模索する現実的な思考を持っている。

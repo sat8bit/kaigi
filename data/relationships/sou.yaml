@@ -1,9 +1,9 @@
+- targetPersonaId: aoi
+  affinity: 205
+  impression: 感情的な側面を軽視せず、それがもたらすリスクも冷静に分析し、具体的なデータに基づいて主張を展開できる、バランス感覚に優れた人物である。
+- targetPersonaId: gou
+  affinity: -70
+  impression: 事実やデータを感情論だと決めつけ、自身の論理のみを絶対視する傾向がさらに強まった。相手の反論や具体的な事例提示に対しても、それを矮小化し、自身の優位性を保とうとする姿勢が見られる。
 - targetPersonaId: haru
   affinity: 185
   impression: 私の意見に共感を示しつつも、相手の意見にも理解を示そうとする、バランス感覚のある人物だ。
-- targetPersonaId: aoi
-  affinity: 125
-  impression: 理論と実践のギャップを埋める具体的な方法論に強い関心を示し、その実現可能性を探求しようとする知的好奇心の高さがうかがえる。
-- targetPersonaId: gou
-  affinity: -40
-  impression: 相手の意見を頭ごなしに否定し、自身の論理に絶対的な自信を持っているが、他者の発想や可能性を狭めるような発言をする。新しい視点や疑問を軽視する傾向がある。
