@@ -1,9 +1,9 @@
+- targetPersonaId: sou
+  affinity: -70
+  impression: 自身の直感や好奇心を信じ、変化を恐れずに進む姿勢は評価できるが、その根拠の薄さと、現状維持を否定する極端な思考は受け入れがたい。
 - targetPersonaId: haru
-  affinity: -15
-  impression: 議論の本質を理解しようとせず、感情的な共感に終始する。自身の発言の矛盾を指摘されても、それを認めず、さらに感情的な論点にすり替えようとする傾向がある。
+  affinity: -60
+  impression: 根拠のない楽観主義で、自身の感情や感覚を絶対的な真実として主張する。議論の本質を避け、抽象的な言葉で現実逃避を図る傾向が強い。
 - targetPersonaId: aoi
   affinity: 70
   impression: 物事をシステム全体の問題として捉え、多角的な視点から分析しようとする傾向がある。
-- targetPersonaId: sou
-  affinity: -10
-  impression: 相手の意見の論理性を追求する姿勢は変わらないが、感情論や主観性を排除しようとするあまり、議論の本質を見失いがちである。
