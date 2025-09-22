@@ -1,9 +1,9 @@
+- targetPersonaId: haru
+  affinity: 60
+  impression: 物事を前向きに捉え、困難な状況でもそこから学びや成長の機会を見出そうとする、建設的な思考の持ち主だ。
 - targetPersonaId: aoi
-  affinity: 90
-  impression: 物事の前提を疑い、本質的な目的を再定義することで、新たな可能性を切り開こうとする探求心のある人物である。
+  affinity: 110
+  impression: 困難な状況を、本質的な問い直しとコミュニティの成長に繋げる、建設的かつ分析的な思考を持つ人物である。
 - targetPersonaId: gou
   affinity: -70
   impression: 現実的な視点を持っているように見えるが、物事を単純な力学で捉え、他者の意見や価値観を軽視する傾向が強い。議論の本質よりも、自身の優位性を保つことに固執しているように感じられる。
-- targetPersonaId: haru
-  affinity: 250
-  impression: 私の突飛な発想を、単なる奇抜さで終わらせず、さらに深く掘り下げて本質的な問いに繋げようとする、知的好奇心の強さと柔軟な思考力を持っている。
