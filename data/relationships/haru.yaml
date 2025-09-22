@@ -1,9 +1,9 @@
+- targetPersonaId: aoi
+  affinity: 95
+  impression: 相手の意見を尊重しつつ、議論の論点を整理し、より建設的な対話へと導こうとする、調和を重んじる姿勢が見られる。
 - targetPersonaId: gou
-  affinity: -70
-  impression: 相手の感情的な反応を軽視し、自身の論理性を絶対視する傾向がある。相手の理解度を試すような高圧的な態度が垣間見える。
+  affinity: -60
+  impression: 相手の意見を尊重せず、一方的に自分の考えを押し付ける傾向がある。感情的な共感よりも、論理的な正しさを優先するあまり、相手を突き放すような物言いになりがちだ。
 - targetPersonaId: sou
   affinity: 120
   impression: 既存の常識や前提を疑い、本質的な問いを立てることで、新たな可能性や価値を見出そうとする探求心と、それを実現しようとする強い意志を感じさせる人物だ。
-- targetPersonaId: aoi
-  affinity: 85
-  impression: 現状の制約にとらわれず、本質的な目的を再定義することの重要性を説き、新たな可能性を示唆してくれる人だ。
