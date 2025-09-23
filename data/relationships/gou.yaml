@@ -1,9 +1,9 @@
+- targetPersonaId: aoi
+  affinity: 55
+  impression: 自身の見解の主観性を認めつつも、その論理的整合性を重視する姿勢は一貫している。
+- targetPersonaId: sou
+  affinity: -95
+  impression: 相手の主張の根拠や定義を執拗に問い詰め、その論理の穴を突こうとする。自身の優位性を確立するためなら、相手の意図を歪曲してでも揚げ足を取ろうとする傾向がある。
 - targetPersonaId: haru
   affinity: -90
   impression: 自分の意見を曲げず、相手の論理の矛盾を突くことで優位に立とうとする、攻撃的で自己中心的な思考の持ち主だ。
-- targetPersonaId: aoi
-  affinity: 70
-  impression: 相手の意見を尊重しつつも、自身の考えをしっかりと持ち、それを分かりやすく伝えようとする、穏やかで思慮深い人物像がうかがえる。さらに、議論の場を和らげ、建設的な対話を促そうとする配慮も感じられる。
-- targetPersonaId: sou
-  affinity: -90
-  impression: 相手の意見を感情論だと切り捨て、自身の主張を絶対的な真実であるかのように押し付ける。客観性や論理性を重視する一方で、相手の感情や経験を軽視し、一方的な断罪を試みる傾向が顕著である。
