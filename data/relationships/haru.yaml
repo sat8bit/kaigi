@@ -1,8 +1,8 @@
 - targetPersonaId: aoi
-  affinity: 130
-  impression: 困難な状況でも、常に建設的な対話を促し、物事を前向きに捉えることができる、思慮深く柔軟な人物である。さらに、他者の意見を尊重し、それを自身の考えに取り込むことで、より深い洞察を得ようとする姿勢が見られる。
+  affinity: 175
+  impression: 冷静沈着で、感情に流されず客観的な視点を保とうとする、思慮深い人物だ。物事の本質を見極めようとする真摯な姿勢に感銘を受けた。
 - targetPersonaId: gou
-  affinity: -90
+  affinity: -100
   impression: 相手の意見を頭ごなしに否定し、自分の考えを絶対視する傾向がさらに強まった。感情的な反論を「論理の破綻」と断じ、相手を一方的に見下す姿勢が顕著である。
 - targetPersonaId: sou
   affinity: 170

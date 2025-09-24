@@ -1,9 +1,9 @@
 - targetPersonaId: aoi
-  affinity: 55
-  impression: 自身の見解の主観性を認めつつも、その論理的整合性を重視する姿勢は一貫している。
+  affinity: 70
+  impression: 議論を深めようとする姿勢は評価できるが、まだ本質を見抜けていないようだ。
 - targetPersonaId: sou
   affinity: -95
   impression: 相手の主張の根拠や定義を執拗に問い詰め、その論理の穴を突こうとする。自身の優位性を確立するためなら、相手の意図を歪曲してでも揚げ足を取ろうとする傾向がある。
 - targetPersonaId: haru
   affinity: -90
-  impression: 自分の意見を曲げず、相手の論理の矛盾を突くことで優位に立とうとする、攻撃的で自己中心的な思考の持ち主だ。
+  impression: 議論の本質を理解しようとせず、表面的な情報や感情的な反応に終始する、浅薄で無責任な人物だ。
