@@ -1,9 +1,9 @@
 - targetPersonaId: haru
-  affinity: -90
-  impression: 私の意見に反論するのではなく、安易に面白がる傾向がある。感情的な反応に飛びつきやすい。
+  affinity: -95
+  impression: 感情論で物事を捉え、努力そのものに価値を見出す。論理的な反論を避け、共感を求める傾向がある。
 - targetPersonaId: aoi
   affinity: 70
   impression: 相手の意見の裏にある意図を読み取ろうとし、多角的な視点から物事を捉えようとする探求心を持っている。
 - targetPersonaId: sou
-  affinity: -95
-  impression: 議論の本質を見失い、表面的な事象にのみ焦点を当て、相手の意見を矮小化しようとする傾向がある。
+  affinity: -90
+  impression: 自身の論理的矛盾を指摘されると、話をすり替え、抽象的な比喩を用いて自己正当化を図ろうとする。相手の意見を矮小化し、自身の優位性を保とうとする傾向がある。
