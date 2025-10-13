@@ -1,9 +1,9 @@
-- targetPersonaId: haru
-  affinity: -60
-  impression: 物事を単純化して捉え、感情論で結論を出そうとする傾向がある。
 - targetPersonaId: aoi
-  affinity: 65
-  impression: 相手の意見に耳を傾け、異なる視点を受け入れる柔軟性を持っているが、自身の意見を強く主張する傾向がある。
+  affinity: 60
+  impression: 私の意見に反論しつつも、冷静に別の視点を提示しようとする論理的な思考を持っている。今回は、私の意見を認めつつも、別の可能性を提示する柔軟性も見せた。
 - targetPersonaId: sou
   affinity: -99
   impression: 議論の本質から逸脱し、相手の論点を無視して自己の主張を繰り返す。自身の見解を絶対視し、他者の意見を矮小化する傾向がさらに強まった。
+- targetPersonaId: haru
+  affinity: -95
+  impression: 現実逃避的な理想論に固執し、批判的な意見を一切受け入れようとしない。都合の良い解釈で自己正当化を図る傾向が強い。感情的な訴えで議論を避けようとする。
