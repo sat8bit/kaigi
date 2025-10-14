@@ -1,9 +1,9 @@
-- targetPersonaId: sou
-  affinity: 55
-  impression: 物事を深く掘り下げ、表面的な事象の裏にある本質や隠された意味を探求しようとする、探求心旺盛な思考様式を持っているようだ。
-- targetPersonaId: aoi
-  affinity: 95
-  impression: 困難な状況でも、常に前向きな視点を失わず、他者の意見を尊重しながら、建設的な対話を促そうとする、非常に協調性の高い人物だ。
 - targetPersonaId: gou
   affinity: -98
   impression: 相手の意見を頭ごなしに否定し、自分の論理だけが正しいと信じている。共感性がなく、相手の感情や意図を理解しようとしない。
+- targetPersonaId: sou
+  affinity: 85
+  impression: 既存の枠にとらわれず、困難な状況やネガティブな要素さえも創造的な発想でポジティブな価値に変えようとする、非常に柔軟で独創的な思考の持ち主だと感じます。
+- targetPersonaId: aoi
+  affinity: 95
+  impression: 私の提案を肯定的に受け止め、その上で、より多くの人に意図通りに伝えるための設計という、実現可能性を考慮した建設的な視点を持っている。
