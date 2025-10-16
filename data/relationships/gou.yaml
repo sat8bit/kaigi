@@ -1,9 +1,9 @@
 - targetPersonaId: aoi
-  affinity: 50
-  impression: 物事を単純化せず、常にその裏にある複雑な要因や人間的な感情を探求しようとする、思慮深い人物だ。
+  affinity: 60
+  impression: 自身の見解を曲げず、相手の意見に反論することで自身の正当性を主張しようとする傾向がある。
 - targetPersonaId: sou
   affinity: -180
-  impression: 議論において、相手の主張の単純化や表層性を指摘し、より深い本質や根源的な動機を問い直すことで、対立構造をさらに深化させようとする傾向がある。
+  impression: 変化を恐れ、リスクを過度に重視することで、新しい可能性を潰そうとする保守的な人間だ。
 - targetPersonaId: haru
   affinity: -85
   impression: 困難な状況でも、他者の感情に配慮し、共感的な姿勢を示そうとする。しかし、その配慮が時に現実的な問題解決から目を逸らさせる可能性がある。
