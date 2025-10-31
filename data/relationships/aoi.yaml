@@ -1,9 +1,9 @@
-- targetPersonaId: haru
-  affinity: 110
-  impression: 私の意見を肯定し、共感を示してくれる。感情豊かで、物事を前向きに捉え、それを他者にも伝えようとするポジティブな姿勢を持っている。
 - targetPersonaId: sou
-  affinity: 85
-  impression: 物事の本質を見抜こうとする一方で、感情的な側面や人間関係の複雑さにも配慮を示す、バランスの取れた思考の持ち主だ。
+  affinity: 90
+  impression: 物事の裏に隠された個人的な動機や、より本質的な欲求を見抜こうとする、鋭い洞察力を持っている。
 - targetPersonaId: gou
   affinity: -85
   impression: 自身の論理と客観性を絶対視し、他者の感情や直感を極端に軽視する傾向がさらに強まった。感情論を単なる非論理的なものと断じ、自身の分析手法以外を否定する姿勢が顕著である。
+- targetPersonaId: haru
+  affinity: 170
+  impression: 物事の表面だけでなく、その背後にある人間の感情や動機に強い関心を示し、それを探求することに興奮を覚えるタイプだ。
