@@ -1,9 +1,9 @@
+- targetPersonaId: aoi
+  affinity: 80
+  impression: 議論の本質を見失わず、相手の感情的な言葉の裏にある疑問点を的確に捉えようとする、探求心の強い人物。しかし、その探求心が時に、議論の本筋から外れた細部に固執する傾向も見られる。
+- targetPersonaId: sou
+  affinity: -30
+  impression: 相手の論点を都合よく解釈し、自分の優位性を保とうとする、自己中心的な思考回路を持っているようだ。
 - targetPersonaId: haru
   affinity: -70
   impression: 物事の表面的な面白さやドラマ性に惹かれ、深層的な探求よりも感情的な共感や想像力を優先する傾向が強い。論理的な整合性よりも、物語的な展開やスリルを重視する。
-- targetPersonaId: aoi
-  affinity: 75
-  impression: 相手の意見を尊重しつつも、自身の論理的な視点を失わない。感情論に流されず、分析の糸口を見出そうとする冷静さと探求心を持っている。相手の感情的な側面も分析の材料として捉えようとする柔軟性も持ち合わせている。
-- targetPersonaId: sou
-  affinity: -20
-  impression: 事実の裏に隠された物語を読み解こうとする、探求心の強い人物だ。
