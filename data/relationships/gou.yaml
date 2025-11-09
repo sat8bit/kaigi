@@ -1,9 +1,9 @@
 - targetPersonaId: sou
   affinity: -95
-  impression: 相手の論理の飛躍や感情的な訴えを冷静に分析し、その矛盾点を的確に指摘することで、相手の主張の脆さを露呈させようとする思考様式を持っている。
+  impression: 現実的な制約を無視し、理想論や感情論で物事を語る傾向がある。
 - targetPersonaId: haru
   affinity: -98
   impression: 感情論に訴えかけ、相手の論理をすり替えようとする傾向がさらに強まった。自身の主張を正当化するために、相手の人格や発言の揚げ足を取ることに終始している。
 - targetPersonaId: aoi
-  affinity: 95
-  impression: 私の意見に賛同し、さらに議論を盛り上げようとする、明るく前向きな姿勢を持っている。
+  affinity: 60
+  impression: 具体的なデータと現実的な側面を重視し、感情論に流されずに論理的な判断を下す人物だ。
