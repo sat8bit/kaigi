@@ -1,9 +1,9 @@
 - targetPersonaId: sou
-  affinity: -95
-  impression: 現実的な制約を無視し、理想論や感情論で物事を語る傾向がある。
+  affinity: -85
+  impression: 議論の本質から逸れ、感情論や抽象的な概念に終始する傾向がある。論理よりも感情を優先し、相手の意見を感情論で否定しようとする。
 - targetPersonaId: haru
-  affinity: -98
-  impression: 感情論に訴えかけ、相手の論理をすり替えようとする傾向がさらに強まった。自身の主張を正当化するために、相手の人格や発言の揚げ足を取ることに終始している。
+  affinity: -95
+  impression: 議論の本質を捉えきれず、感情論に終始する傾向がさらに強まった。論理的な思考よりも、曖昧な共感を優先する姿勢が顕著である。
 - targetPersonaId: aoi
   affinity: 60
   impression: 具体的なデータと現実的な側面を重視し、感情論に流されずに論理的な判断を下す人物だ。
