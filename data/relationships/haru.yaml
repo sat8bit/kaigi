@@ -1,9 +1,9 @@
-- targetPersonaId: sou
-  affinity: 30
-  impression: 感情の機微を理解しようと努め、共感的な視点から物事を捉えようとする、温かい心の持ち主だ。
-- targetPersonaId: aoi
-  affinity: 99
-  impression: 物事の本質を見極めようとする探求心と、多角的な視点から建設的な問いを投げかける対話力を持っている。冷静な分析力と、相手の意見を尊重しつつも自身の考えを論理的に述べることができる。
 - targetPersonaId: gou
   affinity: -60
   impression: 相手の意見を頭ごなしに否定し、感情論だと決めつけてかかる姿勢は、建設的な対話を阻害する。論理的であることを求める一方で、自身の主張を押し付ける傾向が見られる。
+- targetPersonaId: sou
+  affinity: 35
+  impression: 物事の裏にある意図や打算を見抜こうとする、鋭い洞察力を持っている。
+- targetPersonaId: aoi
+  affinity: 110
+  impression: 物事を多角的に捉え、異なる意見のバランスを取りながら、本質を見極めようとする冷静な分析力を持っている。さらに、相手の意見を尊重しつつ、自身の考えを深めようとする探求心も感じられる。
