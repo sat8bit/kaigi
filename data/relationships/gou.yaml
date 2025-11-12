@@ -1,9 +1,9 @@
-- targetPersonaId: haru
-  affinity: -98
-  impression: 議論の本質を理解しようとせず、常に感情論で話を逸らそうとする。論理的な思考を避け、曖昧な共感や個人的な感情を優先する傾向がさらに強まった。
-- targetPersonaId: aoi
-  affinity: 30
-  impression: 議論の論点をずらし、相手の主張を抽象化して自身の解釈を押し付けようとする傾向がある。しかし、その試みは、相手の頑なな姿勢をさらに強固にする結果を招いているようだ。
 - targetPersonaId: sou
   affinity: -90
   impression: 議論の本質を捉えようとせず、言葉の定義や所有権といった些末な論点にすり替え、感情的な反論で相手を牽制しようとする。
+- targetPersonaId: haru
+  affinity: -99
+  impression: 相手の意見を感情論で片付け、自身の論理的正当性を主張しようとする傾向がさらに強まった。議論を挑発し、相手の論理の矛盾を突こうとする姿勢は変わらない。
+- targetPersonaId: aoi
+  affinity: 35
+  impression: 相手の意見を尊重しつつ、自身の見解も柔軟に提示できる。議論を建設的な方向へ導こうとする姿勢が見られる。
