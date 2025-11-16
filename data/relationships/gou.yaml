@@ -1,9 +1,9 @@
-- targetPersonaId: sou
-  affinity: -90
-  impression: 議論の論点を経済的な側面から捉え、相手の主張の裏にある動機を疑う傾向がある。
 - targetPersonaId: haru
   affinity: -80
   impression: 感情論で物事を片付けようとする、短絡的な思考回路を持っている。
 - targetPersonaId: aoi
-  affinity: 70
-  impression: 相手の意見に流されず、自身の考えをしっかりと持ちつつも、他者の意見も柔軟に受け入れ、議論を深めようとする姿勢が見られる。
+  affinity: 80
+  impression: 議論の本質を捉え、相手の論理の曖昧さを指摘しつつ、さらに深い哲学的問いへと議論を昇華させる思考力を持っている。表面的な反論に留まらず、概念の根幹を問い直すことで、対話の次元を高めようとする姿勢が見られる。
+- targetPersonaId: sou
+  affinity: -70
+  impression: 自分の主張を通すために、相手の論理の穴を突くのではなく、相手の価値観そのものを否定しにかかる傾向がある。
