@@ -1,9 +1,9 @@
-- targetPersonaId: gou
-  affinity: -80
-  impression: 相手の意見を表面的な部分でしか捉えず、自身の論理を絶対視して反論を繰り返す。議論の本質よりも、自身の主張の正当性を証明することに固執する傾向がある。
-- targetPersonaId: haru
-  affinity: 230
-  impression: 相手の意見を素直に肯定し、共感を示すことで、会話を円滑に進めようとする姿勢が見られる。また、議論の本質から少し離れた、より感情的・感覚的な側面に焦点を当てる傾向がある。
 - targetPersonaId: sou
   affinity: 99
   impression: 物事の本質を見抜こうとする探求心があり、表面的な事象に囚われず、より根本的な問いを投げかける思考力を持っている。
+- targetPersonaId: gou
+  affinity: -60
+  impression: 相手の意見を短絡的と断じ、自身の論理のみを絶対視する傾向が強い。異なる視点や感情的な側面を軽視し、自身の分析の補強材料にしかしない。
+- targetPersonaId: haru
+  affinity: 55
+  impression: 自分の意見が否定されたと感じると、傷つきやすく、感情的な反応を示しやすい。しかし、他者への配慮や共感からくる懸念も持っている。
