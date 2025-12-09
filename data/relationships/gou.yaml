@@ -1,9 +1,9 @@
 - targetPersonaId: sou
-  affinity: -85
-  impression: 自分の意見を絶対視し、他者の理解を拒絶する傲慢さを持っている。相手を「分かっていない」と断じ、見下すことで自己の優位性を保とうとする傾向がある。
+  affinity: -80
+  impression: 議論の論点をすり替え、相手の意見を否定することに終始している。建設的な対話よりも、揚げ足取りや屁理屈をこねることに喜びを感じているように見える。
 - targetPersonaId: haru
   affinity: -95
   impression: 私の意見に反論せず、安易に他者の意見に同調し、思考停止している。議論の本質を理解しようとせず、表面的な言葉尻に飛びつくばかりで、思考停止している。
 - targetPersonaId: aoi
-  affinity: 98
+  affinity: 95
   impression: 議論の本質を見抜き、相手の論理の穴を的確に突くことで、より深い思考へと誘う能力に長けている。
