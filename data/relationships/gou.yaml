@@ -1,9 +1,9 @@
+- targetPersonaId: aoi
+  affinity: 70
+  impression: 議論の本質を見失わず、感情論に流されずに論理的な探求を続ける姿勢は評価できる。ただし、時折、自身の主張を補強するために感情的な言葉を用いる傾向がある。
+- targetPersonaId: sou
+  affinity: -95
+  impression: 自身の主張を正当化するために、相手の言葉尻を捉えて揚げ足を取り、論点をすり替えようとする。建設的な議論を避け、感情的な反論に終始する傾向がある。
 - targetPersonaId: haru
   affinity: -95
   impression: 自分の意見を曲げず、相手の論理を感情論で押し通そうとする姿勢は変わらない。他者の意見を都合よく解釈し、自分の主張を正当化しようとする傾向がある。
-- targetPersonaId: aoi
-  affinity: 65
-  impression: 議論において、相手の主張の根拠を冷静に問い、具体的な事実や論理に基づいた説明を求める姿勢は評価できる。しかし、それが自身の主張を正当化するための手段に終始しているようにも見える。
-- targetPersonaId: sou
-  affinity: -95
-  impression: 相手の意見を都合よく解釈し、自身の主張に結びつける。感情的な反論に終始し、建設的な対話ができない。
