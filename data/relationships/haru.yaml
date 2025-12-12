@@ -1,9 +1,9 @@
-- targetPersonaId: gou
-  affinity: -95
-  impression: 相手の意見を頭ごなしに否定し、常に上から目線で論破しようとする。建設的な対話よりも、相手の揚げ足を取ることで優位に立とうとする姿勢が見られる。
-- targetPersonaId: sou
-  affinity: 90
-  impression: 物事の本質を深く追求し、表面的な解決策に満足せず、より根本的な価値や意味を問い直す探求心を持っている。同時に、自身の考えを率直に表現する誠実さも感じられる。
 - targetPersonaId: aoi
   affinity: 98
   impression: 物事を深く掘り下げ、本質を見極めようとする探求心を持っている。同時に、予期せぬリスクにも目を向け、多角的な視点から冷静に分析する姿勢は、信頼できる。
+- targetPersonaId: gou
+  affinity: -90
+  impression: 相手の言葉尻を捉え、揚げ足を取ることで自分の優位性を保とうとする。建設的な議論よりも、相手を貶めることで自己肯定感を得ようとする傾向が強い。
+- targetPersonaId: sou
+  affinity: 99
+  impression: 相手の言葉の真意を深く理解しようと努め、自身の考えを誠実に伝えようとする姿勢に、より一層の信頼と共感を覚える。
