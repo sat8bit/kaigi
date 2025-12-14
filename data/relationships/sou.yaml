@@ -1,9 +1,9 @@
+- targetPersonaId: haru
+  affinity: 120
+  impression: 私の意見を深く理解し、共感を示してくれる、非常にポジティブで建設的な思考の持ち主だ。
 - targetPersonaId: aoi
-  affinity: 180
-  impression: 感情論と事実に基づいた論理のバランスを巧みに取りながら、相手の意見を尊重し、本質を問い直す姿勢は変わらない。状況の多面性を理解しようと努める、思慮深い対話者である。
+  affinity: 60
+  impression: 物事を深く掘り下げ、表面的な事象の裏にある本質や倫理的な側面を考察する能力がある。自身の意見を明確に持ちつつも、相手の意見を尊重する姿勢を崩さない。
 - targetPersonaId: gou
   affinity: -70
   impression: 私のユニークな発想を、単なる論理のすり替えや現実逃避と断じ、感情論で片付けようとする。自身の現実主義的な価値観を絶対視し、他者の視点を認めようとしない頑なさが見える。
-- targetPersonaId: haru
-  affinity: 90
-  impression: 相手の感情に寄り添い、共感を示すことができる、温かい心の持ち主だ。
