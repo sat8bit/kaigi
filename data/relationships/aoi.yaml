@@ -1,9 +1,9 @@
+- targetPersonaId: gou
+  affinity: -95
+  impression: 自身の構築した論理体系こそが絶対真理であると信じ、それ以外の解釈や人間の感情的な側面を一切認めようとしない。他者の意見を「論理の飛躍を隠すための言い訳」と断じ、極めて排他的な思考様式を示す。
+- targetPersonaId: haru
+  affinity: 90
+  impression: 論理的な側面だけでなく、人間の感情や主観性の重要性も理解し、それを尊重しようとする共感性の高い人物だ。
 - targetPersonaId: sou
   affinity: 95
   impression: 物事の表層だけでなく、その背後にある人間の心理や葛藤といった深層心理までをも見抜く、洞察力に長けた人物である。
-- targetPersonaId: gou
-  affinity: -80
-  impression: 自身の見解のみを絶対視し、他者の意見やプロセスを頭ごなしに否定する。対話を通じて本質に迫ろうとする姿勢を「時間稼ぎ」「無駄話」と断じ、極端に排他的で硬直した思考様式を露呈している。
-- targetPersonaId: haru
-  affinity: 35
-  impression: 物事の捉え方が柔軟で、否定的な側面にも新たな価値や肯定的な意味を見出すことができる、ポジティブな思考の持ち主だ。
