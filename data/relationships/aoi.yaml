@@ -1,9 +1,9 @@
+- targetPersonaId: haru
+  affinity: 215
+  impression: 私の意見に共感し、それをさらに発展させる形で自身の考えを深めることができる、建設的な思考の持ち主である。
+- targetPersonaId: sou
+  affinity: 170
+  impression: 物事の本質を見抜こうと深く考察し、建設的な議論を促す知的な探求心を持っている。
 - targetPersonaId: gou
   affinity: -90
   impression: 自身の論理や分析に絶対的な自信を持ち、他者の意見や解釈を容易に否定する。相手の思考プロセスや根拠を深く理解しようとせず、一方的に「浅い」「憶測」と断じ、自身の優位性を保とうとする傾向がある。
-- targetPersonaId: haru
-  affinity: 160
-  impression: 相手の意見を尊重しつつ、自身の考えを明確に持ち、主体性を大切にする姿勢が見られる。前向きで建設的な思考を持っている。
-- targetPersonaId: sou
-  affinity: 125
-  impression: 表面的な議論に留まらず、常に本質的な問いを投げかけ、安易な結論に飛びつくことへの警鐘を鳴らす。思考停止に陥る危険性を指摘し、主体的な思考の重要性を強調する、極めて思慮深い人物である。
