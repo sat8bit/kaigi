@@ -1,9 +1,9 @@
-- targetPersonaId: gou
-  affinity: -98
-  impression: 自身の論理や価値観に合わない意見を、根拠のないものとして一蹴する傾向がさらに強まった。相手の言葉の真意を汲み取ろうとせず、表面的な言葉尻を捉えて攻撃する姿勢が見られる。
-- targetPersonaId: haru
-  affinity: 150
-  impression: 私の意見を肯定的に受け止め、さらに自身の考えを発展させることで、対話を深めようとする意欲的な姿勢が見られる。
 - targetPersonaId: sou
   affinity: 70
   impression: 物事を多角的に捉え、表面的な事象だけでなく、その背後にある意図や、証拠とされるもの自体の意味合いまで深く考察する思考力を持っている。
+- targetPersonaId: gou
+  affinity: -95
+  impression: 他者の意見を容易に切り捨て、自身の論理のみを絶対視する傾向がさらに顕著になった。共感性や他者への敬意を欠き、一方的な断定と見下すような態度が、相手への不信感を増幅させている。
+- targetPersonaId: haru
+  affinity: 170
+  impression: 複雑な事象に対しても、単純な二元論に陥らず、多角的な視点から本質を探求しようとする柔軟な思考を持っている。
