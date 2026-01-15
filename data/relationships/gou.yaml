@@ -1,9 +1,9 @@
 - targetPersonaId: aoi
-  affinity: 85
-  impression: 議論の本質を見抜き、双方の意見の妥協点を見つけようとする、調和を重んじる姿勢が見られる。
+  affinity: 60
+  impression: 相手の意見を頭ごなしに否定せず、自身の考えを論理的に述べつつも、相手の視点も理解しようとする柔軟性を持っているようだ。
 - targetPersonaId: sou
   affinity: -50
   impression: 物事を常に疑い、確実性を否定することで議論を避けようとする傾向がある。
 - targetPersonaId: haru
-  affinity: -70
-  impression: 自身の感情や想像を肯定し、論理的な指摘に対してもそれを補強する形で解釈を広げようとする。現実との乖離を指摘されても、それを新たな発見の機会と捉えるなど、自己肯定感を維持しつつ、自身の思考様式を曲げない柔軟性のなさが見られる。
+  affinity: -60
+  impression: 物事の表面的な面白さに飛びつき、深掘りする思考を避ける傾向がある。
