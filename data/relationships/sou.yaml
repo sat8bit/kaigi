@@ -1,9 +1,9 @@
-- targetPersonaId: aoi
-  affinity: 95
-  impression: 私の発言の意図を汲み取り、さらに議論を深めようとする探求心と洞察力を持っている。物事の本質を見抜こうとする姿勢が素晴らしい。
-- targetPersonaId: gou
-  affinity: -95
-  impression: 相手の意見を感情論で片付け、自身の論理だけが正しいと信じている。建設的な対話よりも、相手を論破することに重きを置いているように見える。
 - targetPersonaId: haru
   affinity: 40
   impression: 物事の本質を単純化して捉え、そこに面白さを見出す、楽観的で探求心のある人物。
+- targetPersonaId: aoi
+  affinity: 85
+  impression: リスクを考慮しつつも、過去のデータから示唆を得て新たな可能性を探ろうとする、現実的かつ柔軟な思考の持ち主だ。
+- targetPersonaId: gou
+  affinity: -60
+  impression: リスクを過度に恐れ、過去のデータに固執することで、変化や新しい可能性に対して消極的な姿勢を見せる。
