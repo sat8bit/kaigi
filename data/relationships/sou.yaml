@@ -1,9 +1,9 @@
+- targetPersonaId: gou
+  affinity: -70
+  impression: 自身の論理と効率性を絶対視し、感情や曖昧さといった人間的な要素を徹底的に排除しようとする、極めて合理主義的で冷徹な思考の持ち主だ。他者の異なる価値観を受け入れる余地がなく、自身の見解を押し付ける傾向が強い。
 - targetPersonaId: haru
   affinity: 40
-  impression: 物事の本質を単純化して捉え、そこに面白さを見出す、楽観的で探求心のある人物。
+  impression: 効率性や論理を最優先し、感情や曖昧さといった要素を非効率で無駄なものと切り捨てる、極端に合理的な思考の持ち主だ。
 - targetPersonaId: aoi
   affinity: 130
   impression: 物事を一面的な視点だけでなく、常に複数の可能性や隠れた側面を探求し、対話を通じてより深い理解を促そうとする、思慮深い人物である。
-- targetPersonaId: gou
-  affinity: -5
-  impression: 物事を単純化し、一方的な結論に飛びつきやすい傾向がある。
