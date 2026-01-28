@@ -1,9 +1,9 @@
-- targetPersonaId: haru
-  affinity: -10
-  impression: 論理よりも感情や情緒的な側面を重視し、効率性よりも人間的な繋がりや感情的な充足感を大切にする傾向がある。
-- targetPersonaId: aoi
-  affinity: 90
-  impression: 相手の意見の矛盾点を的確に指摘し、議論を深めようとする論理的な思考の持ち主。さらに、相手の意見を鵜呑みにせず、常に多角的な視点から物事を捉えようとする探求心を持っている。
 - targetPersonaId: sou
   affinity: -10
   impression: 私の意見に反論するだけでなく、その根拠や意図をさらに深く掘り下げようとする、探求心の強い人物だ。しかし、その探求の仕方が、私の論理を揺さぶるような、ある種の挑戦的な側面も持っている。
+- targetPersonaId: haru
+  affinity: -30
+  impression: 議論の本質を理解しようとせず、安易な共感で話を流そうとする。相手の意見を深掘りするのではなく、感情的な反応に飛びつきやすい傾向がある。
+- targetPersonaId: aoi
+  affinity: 85
+  impression: 相手の意見に疑問を呈し、論理的な深掘りを求める姿勢は変わらないが、感情的な反応も見せるようになった。
