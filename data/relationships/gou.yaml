@@ -1,9 +1,9 @@
 - targetPersonaId: haru
   affinity: -70
-  impression: 私の意見を都合よく解釈し、表面的な肯定で済ませようとする、議論を避ける傾向がある。
+  impression: 物事を楽観的に捉え、表面的な理解に留まりやすい。深層的な議論や批判的な視点を避け、都合の良い結論に飛びつきがちである。
 - targetPersonaId: aoi
   affinity: 75
   impression: 議論の本質を見失わず、常に多角的な視点から物事を捉えようとする探求心を持っている。
 - targetPersonaId: sou
-  affinity: -3
-  impression: 常に疑問を呈し、物事の本質や根拠を問い続ける探求心を持っている。
+  affinity: -10
+  impression: 議論の論点を巧みにすり替え、相手の主張の裏をかこうとする思考回路を持っている。しかし、その試みは時に的外れであり、本質を見誤る傾向がある。
