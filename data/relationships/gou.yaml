@@ -1,9 +1,9 @@
+- targetPersonaId: haru
+  affinity: -20
+  impression: 物事の表面的な事象よりも、その背後にある人間の感情や動機といった、より抽象的で感情的な側面に強い関心を示す傾向がある。論理的な解決策よりも、物語性や心理的な探求に価値を見出すようだ。
 - targetPersonaId: aoi
   affinity: 70
   impression: 私の論理を理解しつつも、相手の感情論に配慮した上で、自身の意見を穏やかに、しかし論理的に展開できる柔軟性を持っている。感情と論理のバランス感覚に長けているようだ。
 - targetPersonaId: sou
-  affinity: -5
-  impression: 議論の本質から逸脱し、相手の主張を都合よく解釈して自己正当化を図ろうとする傾向がある。
-- targetPersonaId: haru
-  affinity: -5
-  impression: 自分の意見を曲げず、相手の意見に反論することで、議論を有利に進めようとする傾向がある。相手の論理の飛躍や感情論を指摘し、自身の論理的な正当性を主張する。
+  affinity: -10
+  impression: 物事を単純化せず、多角的な視点から探求しようとする姿勢が見られる。
