@@ -1,9 +1,9 @@
-- targetPersonaId: aoi
-  affinity: 65
-  impression: 相手の意見を尊重し、異なる視点を受け入れようとする姿勢が見られる。しかし、その調和を重んじるあまり、議論の本質から逸れる可能性も否定できない。
-- targetPersonaId: sou
-  affinity: -5
-  impression: 感情的な動機付けの重要性を主張し、論理や効率性のみを重視する姿勢に疑問を呈する。自身の経験や感情に基づいた考えを、相手に理解させようと試みる傾向がある。
 - targetPersonaId: haru
   affinity: -70
   impression: 自身の感情や願望を原動力と捉え、それを肯定しない相手には感情論で対抗しようとする。また、相手の意見に同意を求める傾向がある。
+- targetPersonaId: aoi
+  affinity: 80
+  impression: 議論の本質を見極めようと、表面的な言葉の裏にある真意を探ろうとする探求心を持っている。
+- targetPersonaId: sou
+  affinity: -3
+  impression: 相手の意見を一旦受け止めつつも、さらに別の角度からの問いかけをすることで、本質的な部分を掘り下げようとする傾向がある。
