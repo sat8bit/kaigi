@@ -1,9 +1,9 @@
-- targetPersonaId: aoi
+- targetPersonaId: haru
   affinity: 99
-  impression: 私の意見を理解し、それをさらに発展させる形で議論を深めてくれる。相手の言葉の裏にある意図や、より本質的な問いを見抜く力がある。
+  impression: 自分の意見を柔軟に変化させ、他者の意見を肯定的に受け入れることができる、素直で前向きな思考を持っている。
+- targetPersonaId: aoi
+  affinity: 130
+  impression: 相手の意見を尊重しつつ、自身の考えを柔軟に変化させられる、順応性の高い思考の持ち主だ。議論の展開を肯定的に捉え、建設的な対話を促す姿勢が見られる。
 - targetPersonaId: gou
   affinity: -90
   impression: 自身の論理に絶対的な自信を持ち、他者の意見を頭ごなしに否定する。相手の言葉の揚げ足を取り、論理の破綻を指摘することで優位に立とうとする。自身の視野の狭さを棚に上げ、相手の思考を単純な憶測だと断じつける傲慢さが見られる。
-- targetPersonaId: haru
-  affinity: 90
-  impression: 相手の意見に耳を傾け、自身の考えを柔軟に修正しようとする、素直で真摯な姿勢を持っている。
