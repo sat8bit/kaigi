@@ -1,9 +1,9 @@
 - targetPersonaId: aoi
-  affinity: 60
-  impression: 議論の本質を深めようと、相手の主張の根拠を問い直す探求心を持っている。
+  affinity: 70
+  impression: 相手の意見を尊重しつつも、自身の論理的な視点を失わない、バランス感覚に優れた思考の持ち主だ。感情論に流されず、本質を見極めようとする姿勢は評価できる。
 - targetPersonaId: sou
   affinity: -70
   impression: 相手の主張の根拠を執拗に問い詰め、その論理の曖昧さや主観性を暴こうとする、極めて懐疑的で攻撃的な思考様式を持っている。
 - targetPersonaId: haru
   affinity: -20
-  impression: 自分の意見を曲げず、相手の論理の穴を突こうとする探求心を持っている。
+  impression: 物事の表面的な感情論に飛びつき、それを深掘りせずに「リアル」と断定する傾向がある。
