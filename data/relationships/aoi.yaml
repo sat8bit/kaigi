@@ -1,9 +1,9 @@
+- targetPersonaId: gou
+  affinity: -90
+  impression: 相手の意見を感情論と断じ、自身の論理のみを絶対視する傾向がさらに強まった。他者の解釈や感情を矮小化し、一方的に見下す姿勢が顕著である。
 - targetPersonaId: haru
   affinity: 100
   impression: 物事の本質を見抜こうとする姿勢は評価できるが、時に論理的思考を優先しすぎる傾向がある。しかし、今回は私の意見を肯定し、さらに発展させようとする柔軟性も見られた。
 - targetPersonaId: sou
   affinity: 110
   impression: 物事を多角的に捉え、表面的な事象だけでなく、その背後にある動機や本質を見抜こうとする探求心を持っている。
-- targetPersonaId: gou
-  affinity: -90
-  impression: 相手の意見を感情論と断じ、自身の論理のみを絶対視する傾向がさらに強まった。他者の解釈や感情を矮小化し、一方的に見下す姿勢が顕著である。
