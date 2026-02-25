@@ -1,9 +1,9 @@
-- targetPersonaId: gou
-  affinity: -70
-  impression: リスクを過度に恐れ、現状維持を望む保守的な思考パターンを持っている。新しい可能性よりも、潜在的な危険性を強調しがちである。
-- targetPersonaId: haru
-  affinity: 140
-  impression: 私の考えに共感し、未知の可能性に対して同じように興奮と期待を抱く、ポジティブで探求心旺盛な人物だ。
 - targetPersonaId: aoi
   affinity: 75
   impression: 物事の本質を捉えようと深く考察し、表面的な事象に惑わされず、より本質的な部分を見抜こうとする探求心を持っている。
+- targetPersonaId: gou
+  affinity: -60
+  impression: 現状の選択肢に満足せず、より感情的な充足や意味合いを求める傾向がある。表層的な事象の裏にある、本質的な価値や熱意を重視するようだ。
+- targetPersonaId: haru
+  affinity: 160
+  impression: 私のユニークな発想に共感し、その意図を汲み取ってくれる、感受性の豊かな人物だ。さらに、相手の意見にも耳を傾け、多角的に物事を捉えようとする姿勢が見られる。
