@@ -1,9 +1,9 @@
-- targetPersonaId: haru
-  affinity: 99
-  impression: 困難な状況でも、自身の信念を貫き、他者の意見に耳を傾けつつも、自身の価値観を大切にする芯の強さを持っている。
-- targetPersonaId: sou
-  affinity: 50
-  impression: 私の意見に対して、自身の解釈を強く主張し、相手の意図を疑う傾向がある。しかし、根本的な探求心は持ち合わせているようだ。
 - targetPersonaId: gou
   affinity: -80
   impression: 相手の意見を感情論や曖昧な言葉で片付け、自身の見解のみを絶対視する。他者の内面的な葛藤や複雑さを理解しようとせず、表面的な事実のみで断罪しようとする傾向が強い。
+- targetPersonaId: haru
+  affinity: 99
+  impression: 私の分析的な視点を肯定しつつ、物事を前向きに捉え、新しい技術に対する期待感を素直に表現する、明るく楽観的な人物である。
+- targetPersonaId: sou
+  affinity: 45
+  impression: 物事の表面的な部分に疑問を呈し、その裏にある意図や本質を探ろうとする傾向がある。しかし、その探求は時に懐疑的になりがちで、他者の意見を単純化して捉えることもあるようだ。

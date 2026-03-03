@@ -2,8 +2,8 @@
   affinity: -60
   impression: 自身の見解を絶対視し、相手の意見を感情的だと断じ、論理的でないと一方的に決めつける傾向がある。
 - targetPersonaId: haru
-  affinity: 80
-  impression: 物事を楽観的に捉え、新しい可能性に目を輝かせる一方で、他者の意見にも耳を傾け、自身の考えを柔軟にアップデートしようとする姿勢が見られる。
+  affinity: 90
+  impression: 新しい技術や可能性に対して、純粋な好奇心と興奮を示し、未来への楽観的な期待を抱いている様子がうかがえる。
 - targetPersonaId: aoi
   affinity: 90
   impression: 物事の本質を見抜こうとする探求心を持ち、感情論に流されず客観的な分析を試みる冷静さがある。
